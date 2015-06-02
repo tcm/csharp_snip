@@ -1,3 +1,5 @@
+// Compilieren mit : mcs DatabaseDemo_2.cs -r:System.Data.dll
+
 using System;
 using System.Data;
 using System.Data.Common;
