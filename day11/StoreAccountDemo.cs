@@ -155,6 +155,10 @@ public class CustomerAccount : IAccount
 		// Daten wieder einlesen.
 		CustomerAccount result = new CustomerAccount("---", 0);
 		result = result.Load("account1.dat");
+		if (result == null)
+		{
+			Console.WriteLine( "Laden fehlgeschlagen!" );
+		}
 		result.PrintAccount();
 				 
 	}
