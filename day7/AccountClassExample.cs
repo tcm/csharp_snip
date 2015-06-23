@@ -1,6 +1,6 @@
 using System;
 
-// Methoden deinieren.
+// Methoden definieren.
 public interface IAccount
 {
 	void PayInFunds ( decimal amount );
