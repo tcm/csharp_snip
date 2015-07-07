@@ -4,6 +4,11 @@ using System.IO;
 
 // Speichern von Accounts in einer
 // Hashtable.
+// Anschließend speichern wir
+// die Struktur in einem File.
+//
+// Lesen geht noch nicht!
+
 
 
 // Interfaces
@@ -11,6 +16,8 @@ public interface IAccount
 {
 	void SetAccountName(string inName);
 	string GetAccountName();
+	void SetAccountBalance(decimal inBalance);
+	decimal GetAccountBalance();
 	void Save(TextWriter textOut);
 	// Account Load(TextReader textIn);
 }
@@ -32,6 +39,17 @@ public interface IBank
 public class Account : IAccount
 {
 	private string name = "";
+	private decimal balance = 0;
+
+	public Account ()
+	{
+	}
+
+	public Account (string inName, decimal inBalance)
+	{
+		name = inName;
+		balance = inBalance;
+	}
 
 	public void SetAccountName(string inName)
 	{
@@ -46,6 +64,17 @@ public class Account : IAccount
 	public void Save (TextWriter textOut)
 	{
 		textOut.WriteLine(name);
+		textOut.WriteLine(balance);
+	}
+
+	public void SetAccountBalance (decimal inBalance)
+	{
+		this.balance = inBalance;
+	}
+
+	public decimal GetAccountBalance ()
+	{
+		return this.balance;
 	}
 
 	/* public Account Load (TextReader textIn)
@@ -92,7 +121,7 @@ public class HashBank : IBank
 		foreach (Account account in bankHashtable.Values) 
 		{
 			Console.WriteLine(account.GetAccountName());
-
+			Console.WriteLine(account.GetAccountBalance());
 		}
 	}
 
@@ -196,13 +225,11 @@ public class BankDemo
 
 
 		// Einen Account anlegen.
-		Account MeinKonto = new Account ();
-		MeinKonto.SetAccountName ("User1Account");
-		Console.WriteLine ("AccountName: " + MeinKonto.GetAccountName ()); 
-		// Einen 2. Account anlegen.
-		Account MeinKonto2 = new Account ();
-		MeinKonto2.SetAccountName ("User2Account");
-		Console.WriteLine ("AccountName: " + MeinKonto2.GetAccountName ()); 
+		Account MeinKonto = new Account ("Ted",100);
+		Account MeinKonto2 = new Account ("Edi",200);
+		Account MeinKonto3 = new Account ("Fritz",300);
+
+
 
 		// Account in der Bank speichern.
 		if (DieGrosseBank.StoreAccount (MeinKonto)) {
@@ -212,6 +239,11 @@ public class BankDemo
 		if (DieGrosseBank.StoreAccount (MeinKonto2)) {
 			Console.WriteLine ("Account stored in mem. OK");
 		}
+		// 3. Account in der Bank speichern.
+		if (DieGrosseBank.StoreAccount (MeinKonto3)) {
+			Console.WriteLine ("Account stored in mem. OK");
+		}
+
 
 
 		// In File speichern.
