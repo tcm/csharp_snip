@@ -97,8 +97,8 @@ public class BankDemo
 		Console.WriteLine ("AccountName: " + MeinKonto.GetAccountName ()); 
 		// Einen 2. Account anlegen.
 		IAccount MeinKonto2 = new Account ();
-		MeinKonto.SetAccountName ("User2Account");
-		Console.WriteLine ("AccountName: " + MeinKonto.GetAccountName ()); 
+		MeinKonto2.SetAccountName ("User2Account");
+		Console.WriteLine ("AccountName: " + MeinKonto2.GetAccountName ()); 
 
 		// Account in der Bank speichern.
 		if (DieGrosseBank.StoreAccount (MeinKonto)) 
