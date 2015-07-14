@@ -9,7 +9,7 @@ public interface IAccount
 {
 	string GetName();
 	bool SetName( string inName );
-	string ValidateName( string name );
+
 }
 
 
@@ -40,7 +40,7 @@ public class CustomerAccount : IAccount
 		return true;
 	}
 
-	public string ValidateName (string name)
+	public static string ValidateName (string name)
 	{
 		if (name == null) {
 			return "Name parameter null.";
@@ -109,7 +109,7 @@ public class AccountEditTextUI
 			Console.Write ( "Enter new name : " ) ;
 			newName = Console.ReadLine();
 			string reply;
-			reply = this.account.ValidateName(newName);
+			reply = CustomerAccount.ValidateName(newName);
 			if ( reply.Length == 0 )
 			{
 				break;

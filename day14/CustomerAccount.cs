@@ -3,18 +3,12 @@ using System;
 
 // Klasse mit Plausibiltätsprüfungen.
 //
-// Anmerkung:
-// ValidateName wurde im Beispiel
-// eingentlich mit static definiert,
-// damit keine Objekt-Instanz benötigt
-// wird. Geht aber irgendwie nicht1
-// Mono-Einschränkung?
 
 interface IAccount
 {
 	string GetName();
 	bool SetName( string inName );
-	string ValidateName( string name );
+
 }
 
 
@@ -40,7 +34,7 @@ class CustomerAccount : IAccount
 		return true;
 	}
 
-	public string ValidateName (string name)
+	public static string ValidateName (string name)
 	{
 		if (name == null) {
 			return "Name parameter null.";
@@ -60,38 +54,37 @@ class CustomerAccount : IAccount
 		string reply;
 
 		// Test auf Leerstrings und Null.
-		CustomerAccount a = new CustomerAccount ();
-		reply = a.ValidateName (null);
+		reply = CustomerAccount.ValidateName (null);
 		if (reply != "Name parameter null") {
 			Console.WriteLine ("Null name test failed");
 			errorCount++;
 		}
-		reply = a.ValidateName ("");
+		reply = CustomerAccount.ValidateName ("");
 		if (reply != "No text in the name") {
 			Console.WriteLine ("Empty name test failed");
 			errorCount++;
 		}
-		reply = a.ValidateName ("   ");
+		reply = CustomerAccount.ValidateName ("   ");
 		if (reply != "No text in the name") {
 			Console.WriteLine ("Blank string name test failed");
 			errorCount++;
 		}
 
         // Set-Tests mit und ohne Trim.
-		CustomerAccount b = new CustomerAccount ();
-		if (!b.SetName ("Jim")) {
+		CustomerAccount a = new CustomerAccount ();
+		if (!a.SetName ("Jim")) {
 			Console.WriteLine ("Jim SetName failed");
 			errorCount++;
 		}
-		if (b.GetName () != "Jim") {
+		if (a.GetName () != "Jim") {
 			Console.WriteLine ("Jim GetName failed");
 			errorCount++;
 		}
-		if (!b.SetName ("   Pete   ")) {
+		if (!a.SetName ("   Pete   ")) {
 			Console.WriteLine ("Pete trim SetName failed");
 			errorCount++;
 		}
-		if (b.GetName () != "Pete") {
+		if (a.GetName () != "Pete") {
 			Console.WriteLine ("Pete GetName failed");
 			errorCount++;
 		}
