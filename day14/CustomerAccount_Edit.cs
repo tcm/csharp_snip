@@ -62,7 +62,42 @@ public class AccountEditTextUI
 	public AccountEditTextUI( IAccount inAccount)
 	{
 		this.account = inAccount;
+	} 
+
+	public void DoEdit ()
+	{
+		string command;
+		
+		do
+		{
+			Console.WriteLine ( "Editing account for {0}", account.GetName() );
+			Console.WriteLine ( "Enter name to edit name" );
+			Console.WriteLine ( "Enter pay to pay in funds" );
+			Console.WriteLine ( "Enter draw to draw out funds" );
+			Console.WriteLine ( "Enter exit to exit program" );
+			Console.Write ("Enter command : ");
+			command = Console.ReadLine();
+			command = command.Trim();
+			command = command.ToLower();
+			switch ( command )
+			{
+				
+			case "name" :
+				EditName();
+				break;
+			case "pay" :
+				//PayInFunds();
+				Console.WriteLine("Not implemented.");
+				break;
+			case "draw" :
+				//WithDrawFunds();
+				Console.WriteLine("Not implemented.");
+				break;
+				
+			}
+		} while ( command != "exit" );
 	}
+
 
 	public void EditName ()
 	{
@@ -86,14 +121,15 @@ public class AccountEditTextUI
 
 }
 
+
 public class Program
 {
 	static void Main ()
 	{
-		CustomerAccount a = new CustomerAccount("Ted");
-		AccountEditTextUI edit = new AccountEditTextUI(a);
-		
-		edit.EditName();
+		CustomerAccount a = new CustomerAccount("Account1");
+
+		AccountEditTextUI menue = new AccountEditTextUI(a);
+		menue.DoEdit();
 		
 	}
 }
