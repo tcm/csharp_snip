@@ -1,5 +1,7 @@
 using System;
-using System.Collections; // wegen Hashtable!
+using System.Collections;
+
+// wegen Hashtable!
 using System.IO;
 
 // Speichern von Accounts in einer
@@ -14,24 +16,31 @@ using System.IO;
 // Interfaces
 public interface IAccount
 {
-	void SetAccountName(string inName);
-	string GetAccountName();
-	void SetAccountBalance(decimal inBalance);
-	decimal GetAccountBalance();
-	void Save(TextWriter textOut);
+	void SetAccountName (string inName);
+
+	string GetAccountName ();
+
+	void SetAccountBalance (decimal inBalance);
+
+	decimal GetAccountBalance ();
+
+	void Save (TextWriter textOut);
 	// Account Load(TextReader textIn);
 }
 
 public interface IBank
 {
-	Account FindAccount(string name);
-	bool StoreAccount(Account account);
-	void Print();
-	bool Save(String filename);
-	void Save(TextWriter textOut);
+	Account FindAccount (string name);
+
+	bool StoreAccount (Account account);
+
+	void Print ();
+
+	bool Save (String filename);
+
+	void Save (TextWriter textOut);
 	//HashBank Load(string filename);
 	//HashBank Load(StreamReader textIn);
-
 } 
 
 
@@ -51,20 +60,20 @@ public class Account : IAccount
 		balance = inBalance;
 	}
 
-	public void SetAccountName(string inName)
+	public void SetAccountName (string inName)
 	{
 		this.name = inName;
 	}
 
-	public string GetAccountName()
+	public string GetAccountName ()
 	{
 		return this.name;
 	}
 
 	public void Save (TextWriter textOut)
 	{
-		textOut.WriteLine(name);
-		textOut.WriteLine(balance);
+		textOut.WriteLine (name);
+		textOut.WriteLine (balance);
 	}
 
 	public void SetAccountBalance (decimal inBalance)
@@ -96,32 +105,30 @@ public class Account : IAccount
 	} */
 }
 
-
-public class HashBank : IBank 
+public class HashBank : IBank
 {
-	Hashtable bankHashtable = new Hashtable();
+	Hashtable bankHashtable = new Hashtable ();
 
 
 	// Suchen.
 	public Account FindAccount (string name)
 	{
-		return bankHashtable[name] as Account;
+		return bankHashtable [name] as Account;
 
 	}
 
 	// Speichern im Arbeitspeicher.
 	public bool StoreAccount (Account account)
 	{
-		bankHashtable.Add(account.GetAccountName(), account);
+		bankHashtable.Add (account.GetAccountName (), account);
 		return true;
 	}
 
 	public void Print ()
 	{
-		foreach (Account account in bankHashtable.Values) 
-		{
-			Console.WriteLine(account.GetAccountName());
-			Console.WriteLine(account.GetAccountBalance());
+		foreach (Account account in bankHashtable.Values) {
+			Console.WriteLine (account.GetAccountName ());
+			Console.WriteLine (account.GetAccountBalance ());
 		}
 	}
 
@@ -131,20 +138,17 @@ public class HashBank : IBank
 	{
 		TextWriter textOut = null;
 
-		try
-		{
-			textOut = new StreamWriter(filename);
-			Save(textOut);
-		}
-		catch
-		{
+		try {
+			textOut = new StreamWriter (filename);
+			Save (textOut);
+
+		} catch {
 			return false;
-		}
-		finally
-		{
-			if (textOut != null)
-			{
-				textOut.Close();
+
+		} finally {
+
+			if (textOut != null) {
+				textOut.Close ();
 			}
 		}
 		return true;
@@ -153,8 +157,7 @@ public class HashBank : IBank
 	public void Save (TextWriter textOut)
 	{
 		textOut.WriteLine (bankHashtable.Count);
-		foreach (Account account in bankHashtable.Values) 
-		{
+		foreach (Account account in bankHashtable.Values) {
 			account.Save (textOut);
 		}
 
@@ -218,18 +221,15 @@ public class HashBank : IBank
 public class BankDemo
 {
 
-  static void Main ()
+	static void Main ()
 	{
 		// Ein Hash für Konten anlegen.
 		HashBank DieGrosseBank = new HashBank ();
 
-
 		// Einen Account anlegen.
-		Account MeinKonto = new Account ("Ted",100);
-		Account MeinKonto2 = new Account ("Edi",200);
-		Account MeinKonto3 = new Account ("Fritz",300);
-
-
+		Account MeinKonto = new Account ("Ted", 100);
+		Account MeinKonto2 = new Account ("Edi", 200);
+		Account MeinKonto3 = new Account ("Fritz", 300);
 
 		// Account in der Bank speichern.
 		if (DieGrosseBank.StoreAccount (MeinKonto)) {
@@ -244,15 +244,9 @@ public class BankDemo
 			Console.WriteLine ("Account stored in mem. OK");
 		}
 
-
-
 		// In File speichern.
-		if (DieGrosseBank.Save ("HashBank.dat")) 
-		{
+		if (DieGrosseBank.Save ("HashBank.dat")) {
 			Console.WriteLine ("Accounts stored in file. OK");
 		}
-		
-
-  }
-
+	}
 }
