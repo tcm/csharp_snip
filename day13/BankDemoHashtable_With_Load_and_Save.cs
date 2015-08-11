@@ -9,7 +9,8 @@ using System.IO;
 // Anschließend speichern wir
 // die Struktur in einem File.
 //
-// Lesen geht noch nicht!
+// Lesen geht jetzt!
+// Allerdings noch nicht die Optimal-Lösung.
 
 
 
@@ -17,30 +18,20 @@ using System.IO;
 public interface IAccount
 {
 	void SetAccountName (string inName);
-
 	string GetAccountName ();
-
 	void SetAccountBalance (decimal inBalance);
-
 	decimal GetAccountBalance ();
-
 	void Save (TextWriter textOut);
-	// Account Load(TextReader textIn);
 }
 
 public interface IBank
 {
 	Account FindAccount (string name);
-
 	bool StoreAccount (Account account);
-
 	void Print ();
-
 	bool Save (String filename);
-
 	void Save (TextWriter textOut);
-	//HashBank Load(string filename);
-	//HashBank Load(StreamReader textIn);
+	// bool Load(string filename);
 } 
 
 
@@ -70,12 +61,6 @@ public class Account : IAccount
 		return this.name;
 	}
 
-	public void Save (TextWriter textOut)
-	{
-		textOut.WriteLine (name);
-		textOut.WriteLine (balance);
-	}
-
 	public void SetAccountBalance (decimal inBalance)
 	{
 		this.balance = inBalance;
@@ -86,15 +71,16 @@ public class Account : IAccount
 		return this.balance;
 	}
 
-	/* public Account Load (TextReader textIn)
+	public static Account Load (TextReader textIn)
 	{
 		Account result = null;
 		
 		try
 		{
-			string name = textIn.ReadLine();
-			result = new Account();
-			result.SetAccountName(name);
+			string name = textIn.ReadLine();            // read Name
+			string balanceText = textIn.ReadLine();     // read Balance
+			decimal balance = decimal.Parse(balanceText);
+			result = new Account(name, balance);
 		}
 		catch
 		{
@@ -102,7 +88,13 @@ public class Account : IAccount
 		}
 		return result;
 
-	} */
+	} 
+
+	public void Save (TextWriter textOut)
+	{
+		textOut.WriteLine (name);
+		textOut.WriteLine (balance);
+	}
 }
 
 public class HashBank : IBank
@@ -131,6 +123,41 @@ public class HashBank : IBank
 			Console.WriteLine (account.GetAccountBalance ());
 		}
 	}
+
+	// Lesen der Accounts aus dem File.
+	/* public bool Load (string filename)
+	{
+		TextReader textIn = null;
+
+		try {
+			textIn = new StreamReader (filename);
+			Load (textIn);
+			
+		} catch {
+			return false;
+			
+		} finally {
+			
+			if (textIn != null) {
+				textIn.Close ();
+			}
+		}
+		return true;
+	} */
+
+	public static HashBank Load (TextReader textIn)
+	{
+		HashBank result = new HashBank();
+		string countString = textIn.ReadLine();
+		int count = int.Parse(countString);
+		for (int i = 0; i < count; i++)
+		{
+			Account account = Account.Load(textIn);
+			result.bankHashtable.Add(account.GetAccountName(), account);
+
+		}
+		return result;
+	} 
 
 
 	// Speichern in File.
@@ -161,59 +188,7 @@ public class HashBank : IBank
 			account.Save (textOut);
 		}
 
-	}
-
-	// Lesen aus File.
-	/* public HashBank Load (string filename)
-	{
-		HashBank result = null;
-		StreamReader textIn = null;
-		
-		try 
-		{
-			// Textfile öffnen.
-			textIn = new StreamReader (filename);
-			result = Load(textIn);
-			
-		} 
-		catch 
-		{
-			return null;
-		} 
-		finally 
-		{
-			// Bei Bedarf, Datei schließen.
-			if (textIn != null ) textIn.Close();
-		}
-		
-		return result;
-	}
-
-	public HashBank Load (StreamReader textIn)
-	{
-
-		HashBank result = new HashBank();
-
-		
-		try
-		{
-			string countString = textIn.ReadLine();
-
-			int count = int.Parse(countString);
-			for (int i = 0; i < count; i++)
-			{
-				Account account = Account.Load(textIn);
-				result.bankHashtable.Add(account.GetAccountName(), account);
-			}
-		}
-		catch
-		{
-			return null;
-		}
-		return result;
-	} */
-
-
+	}	
 } 
 
 
@@ -224,7 +199,7 @@ public class BankDemo
 	static void Main ()
 	{
 		// Ein Hash für Konten anlegen.
-		HashBank DieGrosseBank = new HashBank ();
+	    HashBank DieGrosseBank = new HashBank ();
 
 		// Einen Account anlegen.
 		Account MeinKonto = new Account ("Ted", 100);
@@ -248,5 +223,15 @@ public class BankDemo
 		if (DieGrosseBank.Save ("HashBank.dat")) {
 			Console.WriteLine ("Accounts stored in file. OK");
 		}
+
+		// DieGrosseBank.Print();
+
+
+		// Einen leeren Hash für Konten anlegen.
+		HashBank Die_neue_GrosseBank = new HashBank ();
+
+		TextReader textIn = new StreamReader("HashBank.dat");
+		Die_neue_GrosseBank = HashBank.Load (textIn);
+		Die_neue_GrosseBank.Print();
 	}
 }
