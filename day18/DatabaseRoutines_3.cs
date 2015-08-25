@@ -11,40 +11,36 @@ using System.Data.SqlClient;
 
 interface IDatabaseAccess
 {
-	int Connect ();
-	void Query ();
-	void Close ();
-	void Show_Data ();
+	bool Connect ();
+	void Query (String query);
+	bool Close ();
 }
 
 namespace DatabaseRoutines
 {
 	public class DatabaseAccess : IDatabaseAccess
 	{
-		private string connectionString = "Server=192.168.0.67;Database=PASS;User ID=xxxxx;Password=xxxxxx;";
+		private string connectionString = "Server=192.168.0.67;Database=PASS;User ID=xxxxx;Password=xxxxx;";
 		private SqlConnection dbcon;
 		private SqlCommand cmd;
 		SqlDataAdapter da;
-		private DataTable data;
+		public DataTable data;
 
 		// Verbinden.
-		public int Connect ()
+		public bool Connect ()
 		{
 			try {
 				dbcon = new SqlConnection (connectionString);
 				dbcon.Open ();
 			} catch {
-				Console.WriteLine ("DB-Connection-Error!");
-				return 0;
+				return false;
 			}
-			return 1;
+			return true;
 		} 
 
 		// Eine Abfrage losschicken. :-)
-		public void Query ()
+		public void Query (String query)
 		{
-			string query = "SELECT land, bezeichnung FROM laender";
-
 			cmd = new SqlCommand (query, dbcon);
 			// create data adapter
 			da = new SqlDataAdapter (cmd);
@@ -53,20 +49,17 @@ namespace DatabaseRoutines
 			da.Fill (data);
 		}
  
-		public void Close ()
+		public bool Close ()
 		{
-			dbcon.Close ();
-			da.Dispose ();
-		}
+			try {
+				dbcon.Close ();
+				da.Dispose ();
 
-		public void Show_Data ()
-		{
-			foreach (DataRow row in data.Rows) {
-				Console.WriteLine (row.Field<string> (0) + " - " + row.Field<string> (1));
+			} catch {
+				return false;
 			}
+			return true;
 		}
-
-
 	}
 }
 
@@ -77,8 +70,24 @@ public class Program
 		DatabaseRoutines.DatabaseAccess myquery;
 		myquery = new DatabaseRoutines.DatabaseAccess ();
 
-		myquery.Connect ();
-		myquery.Query ();
-		myquery.Show_Data ();
-	}
+		if ( myquery.Connect () ) {
+
+			myquery.Query ("SELECT land, bezeichnung FROM laender");
+
+			// Alle Datensätze anzeigen
+			foreach (DataRow row in myquery.data.Rows) {
+				Console.WriteLine (row.Field<string> (0) + " - " + row.Field<string> (1));
+			}
+
+		} else {
+			Console.WriteLine ("DB-Connection-Error!");
+		}
+
+
+		if ( myquery.Close () ) {
+
+	    } else {
+			Console.WriteLine("DB-Close-Error!");
+		}
+    }
 }
