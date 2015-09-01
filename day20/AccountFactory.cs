@@ -17,10 +17,7 @@ public class CustomerAccount : IAccount
 	private string name = "";
 	private decimal balance = 0;
 
-	public CustomerAccount ()
-	{
-	}
-
+	
 	public CustomerAccount (string inName, decimal inBalance)
 	{
 		name = inName;
@@ -77,15 +74,13 @@ public class BabyAccount : CustomerAccount
 {
 	private string parentName;
 
-	/* public BabyAccount ()
+	public BabyAccount(
+		string inName, decimal inBalance, string inParentName) 
+		: base(inName, inBalance)
 	{
-	} */
+		parentName = inParentName;
+	}
 
-	/* public BabyAccount (string inName, decimal inBalance)
-	{
-		name = inName;
-		balance = inBalance;
-	} */
 
 	public string GetParentName()
 	{
@@ -99,16 +94,7 @@ public class BabyAccount : CustomerAccount
 			return false;
 		}
 		return base.WithdrawFunds(amount);
-	}
-
-	public BabyAccount(
-		string newName,
-		decimal initialBalance,
-		string inParentName)
-		: base(newName, initialBalance)
-	{
-		parentName = inParentName;
-	}
+	}	
 }
 
 
@@ -123,7 +109,16 @@ public class AccountFactory
 		CustomerAccount MeinKonto = new CustomerAccount ("Ted", 100);
 
 		// Einen BabyAccount anlegen.
-		// BabyAccount MeinBabyKonto = new BabyAccount ("Snuffles", 200);
+		BabyAccount MeinBabyKonto = new BabyAccount ("Snuffles", 200, "CustomerAccount");
+
+		// Ausgabe zur Kontrolle.
+		Console.WriteLine("CustomerAccount:");
+		Console.WriteLine(MeinKonto.GetName() + " " + MeinKonto.GetBalance());
+
+		Console.WriteLine("BabyAccount:");
+		Console.WriteLine(MeinBabyKonto.GetName() + " " + MeinBabyKonto.GetBalance());
+		Console.WriteLine(MeinBabyKonto.GetParentName());
+
 
 	}
 }
