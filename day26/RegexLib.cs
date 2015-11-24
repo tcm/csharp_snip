@@ -14,17 +14,13 @@ namespace Application
 
 		public bool Test_TelefonNumber (string StringIn)
 		{
-			bool result = false;
-			this.pattern = ".tt.";
+			bool isValid = false;
+			this.pattern = @"^((\+[0-9]{2,4}([ -][0-9]+?[ -]| ?\([0-9]+?\) ?))|(\(0[0-9 ]+?\) ?)|(0[0-9]+? ?( |-|\/) ?))([0-9]+?[ \/-]?)+?[0-9]$";
 
 			Regex regExp = new Regex (pattern);
+			isValid = regExp.IsMatch(StringIn);
 
-			MatchCollection matchCollection = regExp.Matches(StringIn);
-			int matchesFound = matchCollection.Count;
-
-			if ( matchesFound > 0 ) { result = true; }
-
-			return result; 
+			return isValid; 
 		}
 
 		static void Main ()
@@ -32,25 +28,23 @@ namespace Application
 			RegexLib teststring = new RegexLib ();
 			string StringIn;
 
-
-
-			StringIn = "Otto";
+			StringIn = "(09270)1476";
 			if (teststring.Test_TelefonNumber (StringIn)) {
 				Console.WriteLine (StringIn + " -> true");
 			} else 
 			{
 			    Console.WriteLine (StringIn + " -> false");
 			}
-			Console.WriteLine(teststring.pattern);
+			// Console.WriteLine(teststring.pattern);
 
-			StringIn = "Willi";
+			StringIn = "+49-678788--444444";
 			if (teststring.Test_TelefonNumber (StringIn)) {
 				Console.WriteLine (StringIn + " -> true");
 			} else 
 			{
 				Console.WriteLine (StringIn + " -> false");
 			}
-			Console.WriteLine(teststring.pattern);
+			// Console.WriteLine(teststring.pattern);
 
 				
 		}
