@@ -37,7 +37,7 @@ namespace WindowsFormsApplication5
             else
             {
               
-                string msg = string.Format("{0}\n\nBitte prüfen Sie die Verbindungsdaten (-> PASSLagerverwaltung.xml) und den Status des Datenbank-Servers.\n\nDie Anwendung wird beendet.", this.database.LastError);
+                string msg = string.Format("{0}\n\nBitte prüfen Sie die Verbindungsdaten (-> Verbindung.xml) und den Status des Datenbank-Servers.\n\nDie Anwendung wird beendet.", this.database.LastError);
                 MessageBox.Show(this, msg, "Fehler beim Verbindungsaufbau zur Datenbank.", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 Close();
@@ -91,7 +91,7 @@ namespace WindowsFormsApplication5
             if (DiconnectDatabase() == true)
             {
                 message_textBox1.Text = "Not Connected.";
-                // LoginUser();
+                
             }
          
         }

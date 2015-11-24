@@ -170,7 +170,7 @@ namespace WindowsFormsApplication5
         {
             string applicationFilePath = Assembly.GetExecutingAssembly().Location;
             string applicationPath = Path.GetDirectoryName(applicationFilePath);
-            string iniXMLFilePath = applicationPath + "\\" + "PASSLagerverwaltung.xml";
+            string iniXMLFilePath = applicationPath + "\\" + "Verbindung.xml";
 
             XmlDocument doc = new XmlDocument();
             doc.Load(iniXMLFilePath);
@@ -188,27 +188,7 @@ namespace WindowsFormsApplication5
             }
         }
 
-        public int ValidateUser(string userName, string password)
-        {
-            int result = int.MinValue;
-
-            FbCommand cmd = this.connection.CreateCommand();
-
-            // check for an existing user with this name					
-            cmd.CommandText = "SELECT ID FROM Benutzer WHERE Name = @Username AND Passwort = @Password";
-            cmd.Parameters.AddWithValue("@Username", userName);
-            cmd.Parameters.AddWithValue("@Password", password);
-            object id = cmd.ExecuteScalar();
-            if (id != null)
-            {
-                result = (int)id;
-            }
-
-            return result;
-        }
-
-
-
+       
         public DataSet DoQuery(string sql)
         {
             FbCommand cmd = CreateCommand();
@@ -241,15 +221,7 @@ namespace WindowsFormsApplication5
         * Command API
         * **/
 
-        public DataSet QueryArtikelEinheiten()
-        {
-            return DoQuery("SELECT ID, Name, Beschreibung FROM ArtikelEinheiten ORDER BY ID");
-        }
-
-        public DataSet QueryTeileGruppen()
-        {
-            return DoQuery("SELECT ID, Name FROM TeileGruppen ORDER BY ID");
-        }
+        
 
         public DataSet QueryMaterial()
         {
