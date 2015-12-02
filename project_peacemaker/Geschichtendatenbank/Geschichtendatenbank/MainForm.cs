@@ -53,7 +53,7 @@ namespace Geschichtendatenbank
             if (ConnectDatabase() == true)
             {
               
-                DataSet myrs = database.QueryMainformUebersicht();
+                DataSet myrs = database.QueryMainFormUebersicht();
                 MainForm_Uebersicht_dataGridView.DataSource = myrs.Tables[0];
                 // message_textBox1.Text = "Connected.";
                
@@ -66,16 +66,7 @@ namespace Geschichtendatenbank
             }
         }
 
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void toolStripLabel1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
       
 
        

@@ -219,7 +219,7 @@ namespace Geschichtendatenbank
        
         /* Command API */
 
-        public DataSet QueryMainformUebersicht()
+        public DataSet QueryMainFormUebersicht()
         {
             return DoQuery("SELECT * FROM V_UEBERSICHT");
         }

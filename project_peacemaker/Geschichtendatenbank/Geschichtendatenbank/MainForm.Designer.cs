@@ -120,7 +120,7 @@
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(108, 22);
             this.toolStripLabel1.Text = "Verbindungsstatus:";
-            this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
+            
             // 
             // MainForm
             // 
