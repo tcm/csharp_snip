@@ -37,6 +37,8 @@
             this.Bezeichnung_label = new System.Windows.Forms.Label();
             this.Statusleiste_toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.Filter_Entstehungsjahr_textBox = new System.Windows.Forms.TextBox();
+            this.Entstehungsjahr_label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Uebersicht_dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Figuren_dataGridView)).BeginInit();
             this.Statusleiste_toolStrip.SuspendLayout();
@@ -120,13 +122,31 @@
             this.toolStripLabel1.Name = "toolStripLabel1";
             this.toolStripLabel1.Size = new System.Drawing.Size(108, 22);
             this.toolStripLabel1.Text = "Verbindungsstatus:";
-            
+            // 
+            // Filter_Entstehungsjahr_textBox
+            // 
+            this.Filter_Entstehungsjahr_textBox.Location = new System.Drawing.Point(267, 443);
+            this.Filter_Entstehungsjahr_textBox.Name = "Filter_Entstehungsjahr_textBox";
+            this.Filter_Entstehungsjahr_textBox.Size = new System.Drawing.Size(100, 20);
+            this.Filter_Entstehungsjahr_textBox.TabIndex = 8;
+            this.Filter_Entstehungsjahr_textBox.Leave += new System.EventHandler(this.Filter_Entstehungsjahr_textBox_Leave);
+            // 
+            // Entstehungsjahr_label
+            // 
+            this.Entstehungsjahr_label.AutoSize = true;
+            this.Entstehungsjahr_label.Location = new System.Drawing.Point(264, 427);
+            this.Entstehungsjahr_label.Name = "Entstehungsjahr_label";
+            this.Entstehungsjahr_label.Size = new System.Drawing.Size(83, 13);
+            this.Entstehungsjahr_label.TabIndex = 9;
+            this.Entstehungsjahr_label.Text = "Entstehungsjahr";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 500);
+            this.Controls.Add(this.Entstehungsjahr_label);
+            this.Controls.Add(this.Filter_Entstehungsjahr_textBox);
             this.Controls.Add(this.Statusleiste_toolStrip);
             this.Controls.Add(this.Bezeichnung_label);
             this.Controls.Add(this.Filter_Bezeichnung_textBox);
@@ -158,6 +178,8 @@
         private System.Windows.Forms.Label Bezeichnung_label;
         private System.Windows.Forms.ToolStrip Statusleiste_toolStrip;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.TextBox Filter_Entstehungsjahr_textBox;
+        private System.Windows.Forms.Label Entstehungsjahr_label;
     }
 }
 

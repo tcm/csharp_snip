@@ -66,11 +66,26 @@ namespace Geschichtendatenbank
             }
         }
 
-        
-      
-
        
 
+        private void Filter_Entstehungsjahr_textBox_Leave(object sender, EventArgs e)
+        {
+            GRegex StringIn = new GRegex();
+
+            if (StringIn.Is_Four_Digits(Filter_Entstehungsjahr_textBox.Text) == false)
+            {
+                // Text festlegen.
+                string message = "Jahreszahl muss im Format YYYY eingeben werden. Zum Beispiel: 1983";
+                string caption = "Fehler bei der Dateneingabe";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result;
+
+                // Messagebox anzeigen.
+                result = MessageBox.Show(message, caption, buttons);
+
+                Filter_Entstehungsjahr_textBox.Focus();
+            }
+        }
         
     }
 }
