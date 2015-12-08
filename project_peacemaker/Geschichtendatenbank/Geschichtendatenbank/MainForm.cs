@@ -52,9 +52,27 @@ namespace Geschichtendatenbank
             
             if (ConnectDatabase() == true)
             {
-              
+
+                // message_textBox1.Text = "Connected.";
+
+                // Uebersicht anzeigen.
                 DataSet myrs = database.QueryMainFormUebersicht();
                 MainForm_Uebersicht_dataGridView.DataSource = myrs.Tables[0];
+
+                // Ersten Datensatz auswählen.
+                MainForm_Uebersicht_dataGridView.Rows[0].Selected = true;
+
+                // Werte der angewählten Zeile ermitteln.
+                Int32 selectedRowCount = MainForm_Uebersicht_dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
+                if (selectedRowCount > 0)
+                {
+                    string RowNumber = MainForm_Uebersicht_dataGridView.SelectedRows[0].Index.ToString();
+                    string Cell_Name_ID = MainForm_Uebersicht_dataGridView.Rows[0].Cells["ID"].FormattedValue.ToString();
+
+                    //Nummer der ausgewählten Zeile und ID anzeigen.
+                    Meldung_textBox.Text = "Datensatz-Nr.:" + RowNumber + "   ID:" + Cell_Name_ID;       
+                }
+
                 // message_textBox1.Text = "Connected.";
                
 
@@ -62,7 +80,6 @@ namespace Geschichtendatenbank
             else
             {
                 // message_textBox1.Text = "Not Connected.";
-
             }
         }
 
@@ -74,8 +91,8 @@ namespace Geschichtendatenbank
 
             if (StringIn.Is_Four_Digits(Filter_Entstehungsjahr_textBox.Text) == false)
             {
-                // Text festlegen.
-                string message = "Jahreszahl muss im Format YYYY eingeben werden. Zum Beispiel: 1983";
+                // Messagebox-Text festlegen.
+                string message = "Jahreszahl muss im Format YYYY eingeben werden." + Environment.NewLine +"Zum Beispiel: 1983";
                 string caption = "Fehler bei der Dateneingabe";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 DialogResult result;
@@ -86,6 +103,24 @@ namespace Geschichtendatenbank
                 Filter_Entstehungsjahr_textBox.Focus();
             }
         }
-        
+
+        private void MainForm_Uebersicht_dataGridView_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+           Int32 selectedRowCount = MainForm_Uebersicht_dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
+
+          // Für Multiselect = True (default) oder False
+          if (selectedRowCount > 0)
+            {
+                // for (int i = 0; i < selectedRowCount; i++)
+                // {
+                    // string RowNumber = MainForm_Uebersicht_dataGridView.SelectedRows[i].Index.ToString();
+                    string RowNumber = MainForm_Uebersicht_dataGridView.SelectedRows[0].Index.ToString();
+                    string Cell_Name_ID = MainForm_Uebersicht_dataGridView.Rows[e.RowIndex].Cells["ID"].FormattedValue.ToString();
+
+                    //Nummer der ausgewählten Zeile und ID anzeigen.
+                    Meldung_textBox.Text = "Datensatz-Nr.:" + RowNumber + "   ID:" + Cell_Name_ID;       
+                // }
+            } 
+        }
     }
 }

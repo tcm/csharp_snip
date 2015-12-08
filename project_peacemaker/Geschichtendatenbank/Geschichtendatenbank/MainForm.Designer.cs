@@ -39,6 +39,7 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.Filter_Entstehungsjahr_textBox = new System.Windows.Forms.TextBox();
             this.Entstehungsjahr_label = new System.Windows.Forms.Label();
+            this.Meldung_textBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Uebersicht_dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Figuren_dataGridView)).BeginInit();
             this.Statusleiste_toolStrip.SuspendLayout();
@@ -48,9 +49,11 @@
             // 
             this.MainForm_Uebersicht_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MainForm_Uebersicht_dataGridView.Location = new System.Drawing.Point(43, 56);
+            this.MainForm_Uebersicht_dataGridView.MultiSelect = false;
             this.MainForm_Uebersicht_dataGridView.Name = "MainForm_Uebersicht_dataGridView";
-            this.MainForm_Uebersicht_dataGridView.Size = new System.Drawing.Size(714, 178);
+            this.MainForm_Uebersicht_dataGridView.Size = new System.Drawing.Size(803, 178);
             this.MainForm_Uebersicht_dataGridView.TabIndex = 0;
+            this.MainForm_Uebersicht_dataGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.MainForm_Uebersicht_dataGridView_RowEnter);
             // 
             // MainForm_Figuren_dataGridView
             // 
@@ -140,11 +143,19 @@
             this.Entstehungsjahr_label.TabIndex = 9;
             this.Entstehungsjahr_label.Text = "Entstehungsjahr";
             // 
+            // Meldung_textBox
+            // 
+            this.Meldung_textBox.Location = new System.Drawing.Point(229, 388);
+            this.Meldung_textBox.Name = "Meldung_textBox";
+            this.Meldung_textBox.Size = new System.Drawing.Size(535, 20);
+            this.Meldung_textBox.TabIndex = 10;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(880, 500);
+            this.Controls.Add(this.Meldung_textBox);
             this.Controls.Add(this.Entstehungsjahr_label);
             this.Controls.Add(this.Filter_Entstehungsjahr_textBox);
             this.Controls.Add(this.Statusleiste_toolStrip);
@@ -180,6 +191,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.TextBox Filter_Entstehungsjahr_textBox;
         private System.Windows.Forms.Label Entstehungsjahr_label;
+        private System.Windows.Forms.TextBox Meldung_textBox;
     }
 }
 
