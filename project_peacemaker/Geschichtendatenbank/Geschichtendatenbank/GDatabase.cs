@@ -224,6 +224,16 @@ namespace Geschichtendatenbank
             return DoQuery("SELECT * FROM V_UEBERSICHT");
         }
 
+        public DataSet QueryMainFormFiguren(int Geschichte_ID)
+        {
+            string sql = "SELECT VORNAME, NAME FROM V_FIGUREN WHERE GESCHICHTE_ID  = @Geschichte_ID;";
+
+            FbCommand cmd = CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@Geschichte_ID", Geschichte_ID);
+            return DoQuery(cmd);
+        }
+
     }
  }
 

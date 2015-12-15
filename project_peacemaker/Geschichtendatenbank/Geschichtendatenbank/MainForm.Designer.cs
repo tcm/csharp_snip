@@ -47,6 +47,7 @@
             // 
             // MainForm_Uebersicht_dataGridView
             // 
+            this.MainForm_Uebersicht_dataGridView.AllowUserToAddRows = false;
             this.MainForm_Uebersicht_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MainForm_Uebersicht_dataGridView.Location = new System.Drawing.Point(43, 56);
             this.MainForm_Uebersicht_dataGridView.MultiSelect = false;
@@ -57,10 +58,11 @@
             // 
             // MainForm_Figuren_dataGridView
             // 
+            this.MainForm_Figuren_dataGridView.AllowUserToAddRows = false;
             this.MainForm_Figuren_dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MainForm_Figuren_dataGridView.Location = new System.Drawing.Point(43, 262);
             this.MainForm_Figuren_dataGridView.Name = "MainForm_Figuren_dataGridView";
-            this.MainForm_Figuren_dataGridView.Size = new System.Drawing.Size(164, 147);
+            this.MainForm_Figuren_dataGridView.Size = new System.Drawing.Size(324, 147);
             this.MainForm_Figuren_dataGridView.TabIndex = 1;
             // 
             // Uebersicht_label
@@ -145,9 +147,9 @@
             // 
             // Meldung_textBox
             // 
-            this.Meldung_textBox.Location = new System.Drawing.Point(229, 388);
+            this.Meldung_textBox.Location = new System.Drawing.Point(661, 452);
             this.Meldung_textBox.Name = "Meldung_textBox";
-            this.Meldung_textBox.Size = new System.Drawing.Size(535, 20);
+            this.Meldung_textBox.Size = new System.Drawing.Size(219, 20);
             this.Meldung_textBox.TabIndex = 10;
             // 
             // MainForm
