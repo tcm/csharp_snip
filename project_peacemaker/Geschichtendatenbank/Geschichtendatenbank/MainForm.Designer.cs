@@ -40,6 +40,8 @@
             this.Filter_Entstehungsjahr_textBox = new System.Windows.Forms.TextBox();
             this.Entstehungsjahr_label = new System.Windows.Forms.Label();
             this.Meldung_textBox = new System.Windows.Forms.TextBox();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Uebersicht_dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Figuren_dataGridView)).BeginInit();
             this.Statusleiste_toolStrip.SuspendLayout();
@@ -115,12 +117,13 @@
             // 
             this.Statusleiste_toolStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.Statusleiste_toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1});
+            this.toolStripLabel1,
+            this.toolStripLabel2,
+            this.toolStripLabel3});
             this.Statusleiste_toolStrip.Location = new System.Drawing.Point(0, 475);
             this.Statusleiste_toolStrip.Name = "Statusleiste_toolStrip";
             this.Statusleiste_toolStrip.Size = new System.Drawing.Size(880, 25);
             this.Statusleiste_toolStrip.TabIndex = 7;
-            this.Statusleiste_toolStrip.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
@@ -147,10 +150,21 @@
             // 
             // Meldung_textBox
             // 
-            this.Meldung_textBox.Location = new System.Drawing.Point(661, 452);
+            this.Meldung_textBox.Location = new System.Drawing.Point(419, 452);
             this.Meldung_textBox.Name = "Meldung_textBox";
-            this.Meldung_textBox.Size = new System.Drawing.Size(219, 20);
+            this.Meldung_textBox.Size = new System.Drawing.Size(427, 20);
             this.Meldung_textBox.TabIndex = 10;
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(22, 22);
+            this.toolStripLabel2.Text = "---";
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(0, 22);
             // 
             // MainForm
             // 
@@ -194,6 +208,8 @@
         private System.Windows.Forms.TextBox Filter_Entstehungsjahr_textBox;
         private System.Windows.Forms.Label Entstehungsjahr_label;
         private System.Windows.Forms.TextBox Meldung_textBox;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
     }
 }
 
