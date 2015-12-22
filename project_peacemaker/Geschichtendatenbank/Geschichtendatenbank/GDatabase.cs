@@ -224,6 +224,18 @@ namespace Geschichtendatenbank
             return DoQuery("SELECT * FROM V_UEBERSICHT");
         }
 
+        public DataSet QueryMainFormUebersicht_Filter_Jahr(string Entstehungsjahr)
+        {
+            string sql = "SELECT * FROM V_UEBERSICHT WHERE ENTSTEHUNGSJAHR = @Entstehungsjahr";
+
+            FbCommand cmd = CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@Entstehungsjahr", Entstehungsjahr);
+            return DoQuery(cmd);
+
+          
+        }
+
         public DataSet QueryMainFormFiguren(int Geschichte_ID)
         {
             string sql = "SELECT VORNAME, NAME FROM V_FIGUREN WHERE GESCHICHTE_ID  = @Geschichte_ID;";
