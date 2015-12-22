@@ -200,30 +200,9 @@ namespace Geschichtendatenbank
         {
             DataSet ds = new DataSet();
             FbDataAdapter da = new FbDataAdapter(cmd);
+            da.Fill(ds, "Result");
 
-            // da.Fill(ds, "Result");
-
-            try
-            {
-                da.Fill(ds, "Result");
-                return ds;
-            }
-            catch (FbException ex)
-            {
-                switch (ex.ErrorCode)
-                {
-                    case 335544352: // network_error
-                        this.lastError = string.Format("Keine read/select-Berechtigung für das Objekt. Fehlermeldung: {0}", ex.Message);
-                        break;
-                    default:
-                        this.lastError = string.Format("Allgemeiner Datenbankfehler: {0}", ex.Message);
-                        break;
-                }
-
-                return null;
-            }
-             
-            // return ds;
+            return ds;
         }
 
         public int DoExecuteCommand(FbCommand cmd)

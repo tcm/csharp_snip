@@ -52,25 +52,20 @@ namespace Geschichtendatenbank
             
             if (ConnectDatabase() == true)
             {
-
-                toolStripLabel2.Text = "Connected.";
-                toolStripLabel2.ForeColor = System.Drawing.Color.Green;
+                // message_textBox1.Text = "Connected.";
 
                 /* -------------------------------------------------------------*/
                 /* DataGrid Uebersicht füllen.                                  */
                 /* -------------------------------------------------------------*/
                 DataSet myrs = database.QueryMainFormUebersicht();
-                if (myrs != null)
-                {
-                    MainForm_Uebersicht_dataGridView.DataSource = myrs.Tables[0];
-                }
+                MainForm_Uebersicht_dataGridView.DataSource = myrs.Tables[0];
 
-                    /* -------------------------------------------------------------*/
-                    /* Werte der angewählten Zeile ermitteln und ausgeben           */
-                    /* -------------------------------------------------------------*/
-                    MainForm_Uebersicht_dataGridView.Rows[0].Selected = true;  //  Ersten Datensatz auswählen. 
-                    Int32 selectedRowCount = MainForm_Uebersicht_dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
-               
+
+                /* -------------------------------------------------------------*/
+                /* Werte der angewählten Zeile ermitteln und ausgeben           */
+                /* -------------------------------------------------------------*/
+                MainForm_Uebersicht_dataGridView.Rows[0].Selected = true;  //  Ersten Datensatz auswählen. 
+                Int32 selectedRowCount = MainForm_Uebersicht_dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
 
                 if (selectedRowCount > 0)
                 {
@@ -84,18 +79,12 @@ namespace Geschichtendatenbank
                     int Material_ID = Int32.Parse(Cell_Name_ID);
 
                     DataSet myrs2 = database.QueryMainFormFiguren(Material_ID);
-                    if (myrs2 != null)
-                    {
-                        MainForm_Figuren_dataGridView.DataSource = myrs2.Tables[0];
-                    }
-
-                    toolStripLabel3.Text = database.LastError;
+                    MainForm_Figuren_dataGridView.DataSource = myrs2.Tables[0];
                 }
             }
             else
             {
-               toolStripLabel2.Text = "Not Connected.";
-               toolStripLabel2.ForeColor = System.Drawing.Color.Red;
+                // message_textBox1.Text = "Not Connected.";
             }
         }
 
@@ -143,12 +132,7 @@ namespace Geschichtendatenbank
                     /* -------------------------------------------------------------*/
                     int Material_ID = Int32.Parse(Cell_Name_ID);
                     DataSet myrs2 = database.QueryMainFormFiguren(Material_ID);
-                    if (myrs2 != null)
-                    { 
-                       MainForm_Figuren_dataGridView.DataSource = myrs2.Tables[0];
-                    }
-
-                    toolStripLabel3.Text = database.LastError;
+                    MainForm_Figuren_dataGridView.DataSource = myrs2.Tables[0];
             } 
         }
     }
