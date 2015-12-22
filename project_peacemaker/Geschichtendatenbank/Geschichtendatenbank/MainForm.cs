@@ -52,6 +52,9 @@ namespace Geschichtendatenbank
             
             if (ConnectDatabase() == true)
             {
+                /* -------------------------------------------------------------*/
+                /* Verbindungsstatus anzeigen.                                  */
+                /* -------------------------------------------------------------*/
                 DBStatus_toolStripLabel.Text = "Verbunden.";
                 DBStatus_toolStripLabel.ForeColor = System.Drawing.Color.Green;
 
@@ -61,12 +64,22 @@ namespace Geschichtendatenbank
                 DataSet myrs = database.QueryMainFormUebersicht();
                 MainForm_Uebersicht_dataGridView.DataSource = myrs.Tables[0];
 
+                /* -------------------------------------------------------------*/
+                /* Ersten Datensatz auswählen.                                  */
+                /* -------------------------------------------------------------*/
+                MainForm_Uebersicht_dataGridView.Rows[0].Selected = true;
 
-                MainForm_Figuren_dataGridView_aktualisieren();
+                /* -------------------------------------------------------------*/
+                /* DataGrid Figuren füllen.                                     */
+                /* -------------------------------------------------------------*/
+                MainForm_Figuren_dataGridView_aktualisieren(0);
 
             }
             else
             {
+                /* -------------------------------------------------------------*/
+                /* Verbindungsstatus anzeigen.                                  */
+                /* -------------------------------------------------------------*/
                 DBStatus_toolStripLabel.Text = "Nicht verbunden.";
                 DBStatus_toolStripLabel.ForeColor = System.Drawing.Color.Red;
             }
@@ -87,9 +100,14 @@ namespace Geschichtendatenbank
                 MainForm_Uebersicht_dataGridView.DataSource = myrs.Tables[0];
 
                 /* -------------------------------------------------------------*/
+                /* Ersten Datensatz auswählen.                                  */
+                /* -------------------------------------------------------------*/
+                MainForm_Uebersicht_dataGridView.Rows[0].Selected = true; 
+
+                /* -------------------------------------------------------------*/
                 /* DataGrid Figuren füllen.                                     */
                 /* -------------------------------------------------------------*/
-                MainForm_Figuren_dataGridView_aktualisieren();
+                MainForm_Figuren_dataGridView_aktualisieren(0);
 
             }
 
@@ -116,9 +134,14 @@ namespace Geschichtendatenbank
                 MainForm_Uebersicht_dataGridView.DataSource = myrs.Tables[0];
 
                 /* -------------------------------------------------------------*/
+                /* Ersten Datensatz auswählen.                                  */
+                /* -------------------------------------------------------------*/
+                MainForm_Uebersicht_dataGridView.Rows[0].Selected = true; 
+
+                /* -------------------------------------------------------------*/
                 /* DataGrid Figuren füllen.                                     */
                 /* -------------------------------------------------------------*/
-                MainForm_Figuren_dataGridView_aktualisieren();
+                MainForm_Figuren_dataGridView_aktualisieren(0);
 
             }
         }
@@ -128,41 +151,30 @@ namespace Geschichtendatenbank
         {
            Int32 selectedRowCount = MainForm_Uebersicht_dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
 
-          // Für Multiselect = True (default) oder False
+        
           if (selectedRowCount > 0)
             {
-                /* for (int i = 0; i < selectedRowCount; i++)
+                /* Code für  Multiselect = True (default)
+                for (int i = 0; i < selectedRowCount; i++)
                 {
-                    string RowNumber = MainForm_Uebersicht_dataGridView.SelectedRows[i].Index.ToString(); */
+                    string RowNumber = MainForm_Uebersicht_dataGridView.SelectedRows[i].Index.ToString(); 
+                */
 
-                   /* -------------------------------------------------------------*/
-                   /* Werte der angewählten Zeile ermitteln und ausgeben.          */
-                   /* -------------------------------------------------------------*/
-                   string RowNumber = MainForm_Uebersicht_dataGridView.SelectedRows[0].Index.ToString();
-                   string Cell_Name_ID = MainForm_Uebersicht_dataGridView.Rows[e.RowIndex].Cells["ID"].FormattedValue.ToString();
-                   Meldung_textBox.Text = "Datensatz-Nr.:" + RowNumber + "   ID:" + Cell_Name_ID; 
+                /* -------------------------------------------------------------*/
+                /* DataGrid Figuren füllen.                                     */
+                /* -------------------------------------------------------------*/
+                MainForm_Figuren_dataGridView_aktualisieren(e.RowIndex);
 
-                   /* -------------------------------------------------------------*/
-                   /* DataGrid Figuren füllen.                                     */
-                   /* -------------------------------------------------------------*/
-                   int Material_ID = Int32.Parse(Cell_Name_ID);
-                   DataSet myrs2 = database.QueryMainFormFiguren(Material_ID);
-                   MainForm_Figuren_dataGridView.DataSource = myrs2.Tables[0]; 
             } 
         }
 
-        private void MainForm_Figuren_dataGridView_aktualisieren()
+        private void MainForm_Figuren_dataGridView_aktualisieren(int tRowIndex)
         {
-            /* -------------------------------------------------------------*/
-            /* Ersten Datensatz auswählen.                                  */
-            /* -------------------------------------------------------------*/
-            MainForm_Uebersicht_dataGridView.Rows[0].Selected = true; 
-
             /* -------------------------------------------------------------*/
             /* Werte der angewählten Zeile ermitteln und ausgeben.          */
             /* -------------------------------------------------------------*/
             string RowNumber = MainForm_Uebersicht_dataGridView.SelectedRows[0].Index.ToString();
-            string Cell_Name_ID = MainForm_Uebersicht_dataGridView.Rows[0].Cells["ID"].FormattedValue.ToString();
+            string Cell_Name_ID = MainForm_Uebersicht_dataGridView.Rows[tRowIndex].Cells["ID"].FormattedValue.ToString();
 
             Meldung_textBox.Text = "Datensatz-Nr.:" + RowNumber + "   ID:" + Cell_Name_ID;
 
@@ -172,7 +184,6 @@ namespace Geschichtendatenbank
             int Material_ID = Int32.Parse(Cell_Name_ID);
             DataSet myrs2 = database.QueryMainFormFiguren(Material_ID);
             MainForm_Figuren_dataGridView.DataSource = myrs2.Tables[0];
-
         }
 
       
