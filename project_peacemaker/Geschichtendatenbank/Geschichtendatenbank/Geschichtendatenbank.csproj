@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditGeschichteDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditGeschichteDialog.Designer.cs">
+      <DependentUpon>EditGeschichteDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="GDatabase.cs" />
     <Compile Include="GRegex.cs" />
     <Compile Include="MainForm.cs">
@@ -57,6 +63,9 @@
     </Compile>
     <Compile Include="Geschichtendatenbank.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EditGeschichteDialog.resx">
+      <DependentUpon>EditGeschichteDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

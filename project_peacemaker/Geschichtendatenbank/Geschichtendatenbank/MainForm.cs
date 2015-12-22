@@ -186,6 +186,18 @@ namespace Geschichtendatenbank
             MainForm_Figuren_dataGridView.DataSource = myrs2.Tables[0];
         }
 
+        
+        private void neueGeschichteAnlegenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditGeschichteDialog dialog = new EditGeschichteDialog();
+            dialog.Show(this);
+        }
+
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
       
     }
 }

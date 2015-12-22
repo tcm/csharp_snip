@@ -37,13 +37,19 @@
             this.Titel_label = new System.Windows.Forms.Label();
             this.Statusleiste_toolStrip = new System.Windows.Forms.ToolStrip();
             this.Beschriftung_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.DBStatus_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
             this.Filter_Entstehungsjahr_textBox = new System.Windows.Forms.TextBox();
             this.Entstehungsjahr_label = new System.Windows.Forms.Label();
             this.Meldung_textBox = new System.Windows.Forms.TextBox();
-            this.DBStatus_toolStripLabel = new System.Windows.Forms.ToolStripLabel();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bearbeitenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.neueGeschichteAnlegenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Uebersicht_dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Figuren_dataGridView)).BeginInit();
             this.Statusleiste_toolStrip.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainForm_Uebersicht_dataGridView
@@ -130,6 +136,12 @@
             this.Beschriftung_toolStripLabel.Size = new System.Drawing.Size(108, 22);
             this.Beschriftung_toolStripLabel.Text = "Verbindungsstatus:";
             // 
+            // DBStatus_toolStripLabel
+            // 
+            this.DBStatus_toolStripLabel.Name = "DBStatus_toolStripLabel";
+            this.DBStatus_toolStripLabel.Size = new System.Drawing.Size(22, 22);
+            this.DBStatus_toolStripLabel.Text = "---";
+            // 
             // Filter_Entstehungsjahr_textBox
             // 
             this.Filter_Entstehungsjahr_textBox.Location = new System.Drawing.Point(267, 443);
@@ -154,11 +166,48 @@
             this.Meldung_textBox.Size = new System.Drawing.Size(219, 20);
             this.Meldung_textBox.TabIndex = 10;
             // 
-            // DBStatus_toolStripLabel
+            // menuStrip1
             // 
-            this.DBStatus_toolStripLabel.Name = "DBStatus_toolStripLabel";
-            this.DBStatus_toolStripLabel.Size = new System.Drawing.Size(22, 22);
-            this.DBStatus_toolStripLabel.Text = "---";
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.bearbeitenToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(928, 24);
+            this.menuStrip1.TabIndex = 11;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.beendenToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(46, 20);
+            this.toolStripMenuItem1.Text = "Datei";
+            // 
+            // beendenToolStripMenuItem
+            // 
+            this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
+            this.beendenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.beendenToolStripMenuItem.Text = "Beenden";
+            this.beendenToolStripMenuItem.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
+            // 
+            // bearbeitenToolStripMenuItem
+            // 
+            this.bearbeitenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.neueGeschichteAnlegenToolStripMenuItem});
+            this.bearbeitenToolStripMenuItem.Name = "bearbeitenToolStripMenuItem";
+            this.bearbeitenToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.bearbeitenToolStripMenuItem.Text = "Bearbeiten";
+            // 
+            // neueGeschichteAnlegenToolStripMenuItem
+            // 
+            this.neueGeschichteAnlegenToolStripMenuItem.Name = "neueGeschichteAnlegenToolStripMenuItem";
+            this.neueGeschichteAnlegenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.neueGeschichteAnlegenToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+            this.neueGeschichteAnlegenToolStripMenuItem.Text = "neue Geschichte anlegen";
+            this.neueGeschichteAnlegenToolStripMenuItem.Click += new System.EventHandler(this.neueGeschichteAnlegenToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -169,6 +218,7 @@
             this.Controls.Add(this.Entstehungsjahr_label);
             this.Controls.Add(this.Filter_Entstehungsjahr_textBox);
             this.Controls.Add(this.Statusleiste_toolStrip);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.Titel_label);
             this.Controls.Add(this.Filter_Titel_textBox);
             this.Controls.Add(this.Filter_label);
@@ -176,6 +226,7 @@
             this.Controls.Add(this.Uebersicht_label);
             this.Controls.Add(this.MainForm_Figuren_dataGridView);
             this.Controls.Add(this.MainForm_Uebersicht_dataGridView);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Geschichtendatenbank";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
@@ -183,6 +234,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.MainForm_Figuren_dataGridView)).EndInit();
             this.Statusleiste_toolStrip.ResumeLayout(false);
             this.Statusleiste_toolStrip.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -203,6 +256,11 @@
         private System.Windows.Forms.Label Entstehungsjahr_label;
         private System.Windows.Forms.TextBox Meldung_textBox;
         private System.Windows.Forms.ToolStripLabel DBStatus_toolStripLabel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bearbeitenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem neueGeschichteAnlegenToolStripMenuItem;
     }
 }
 
