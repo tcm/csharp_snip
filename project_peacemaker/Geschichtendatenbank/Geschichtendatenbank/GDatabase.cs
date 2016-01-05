@@ -224,6 +224,11 @@ namespace Geschichtendatenbank
             return DoQuery("SELECT * FROM V_UEBERSICHT");
         }
 
+        public DataSet QueryMainFormUebersicht_Filter_Titel(string Titel)
+        {
+            return DoQuery("SELECT * FROM V_UEBERSICHT WHERE TITEL LIKE '%" + Titel + "%'");
+        }
+
         public DataSet QueryMainFormUebersicht_Filter_Jahr(string Entstehungsjahr)
         {
             string sql = "SELECT * FROM V_UEBERSICHT WHERE ENTSTEHUNGSJAHR = @Entstehungsjahr";

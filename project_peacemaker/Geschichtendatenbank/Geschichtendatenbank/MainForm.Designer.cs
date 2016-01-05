@@ -108,6 +108,7 @@
             this.Filter_Titel_textBox.Name = "Filter_Titel_textBox";
             this.Filter_Titel_textBox.Size = new System.Drawing.Size(144, 20);
             this.Filter_Titel_textBox.TabIndex = 5;
+            this.Filter_Titel_textBox.Leave += new System.EventHandler(this.Filter_Titel_textBox_Leave);
             // 
             // Titel_label
             // 

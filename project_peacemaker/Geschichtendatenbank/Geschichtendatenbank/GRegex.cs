@@ -37,5 +37,15 @@ namespace Geschichtendatenbank
 			isValid = regExp.IsMatch(StringIn);
 			return isValid; 
 		}
+
+        public bool Is_Titel(string StringIn)
+        {
+            bool isValid = false;
+            this.pattern = @"[0-9A-Za-zÖöÄäÜüß]+";
+
+            Regex regExp = new Regex(pattern);
+            isValid = regExp.IsMatch(StringIn);
+            return isValid;
+        }
     }
 }
