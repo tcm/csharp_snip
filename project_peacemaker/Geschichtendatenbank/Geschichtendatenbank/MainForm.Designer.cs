@@ -162,6 +162,7 @@
             // 
             // Meldung_textBox
             // 
+            this.Meldung_textBox.Enabled = false;
             this.Meldung_textBox.Location = new System.Drawing.Point(661, 452);
             this.Meldung_textBox.Name = "Meldung_textBox";
             this.Meldung_textBox.Size = new System.Drawing.Size(219, 20);
