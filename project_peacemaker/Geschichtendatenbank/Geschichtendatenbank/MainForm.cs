@@ -177,10 +177,10 @@ namespace Geschichtendatenbank
         }
 
         private void MainForm_Uebersicht_dataGridView_RowEnter(object sender, DataGridViewCellEventArgs e)
+        
         {
            Int32 selectedRowCount = MainForm_Uebersicht_dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
 
-        
           if (selectedRowCount > 0)
             {
                 /* Code für  Multiselect = True (default)
@@ -254,7 +254,7 @@ namespace Geschichtendatenbank
 
         private void neueGeschichteAnlegenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EditGeschichteDialog dialog = new EditGeschichteDialog();
+            EditGeschichteDialog dialog = new EditGeschichteDialog(this.database);
             dialog.Show(this);
         }
 

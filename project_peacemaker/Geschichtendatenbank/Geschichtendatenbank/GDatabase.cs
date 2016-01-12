@@ -11,7 +11,7 @@ using FirebirdSql.Data.FirebirdClient;
 
 namespace Geschichtendatenbank
 {
-    class GDatabase
+    public class GDatabase
     {
         private string dataSource = "";
         private string database = "";
@@ -236,9 +236,7 @@ namespace Geschichtendatenbank
             FbCommand cmd = CreateCommand();
             cmd.CommandText = sql;
             cmd.Parameters.AddWithValue("@Entstehungsjahr", Entstehungsjahr);
-            return DoQuery(cmd);
-
-          
+            return DoQuery(cmd);  
         }
 
         public DataSet QueryMainFormFiguren(int Geschichte_ID)
@@ -251,6 +249,51 @@ namespace Geschichtendatenbank
             return DoQuery(cmd);
         }
 
+        public int InsertGeschichte(string Bezeichnung, short Entstehungsjahr)
+        {
+            int Geschichte_ID = 0;
+
+            BeginTransaction();
+            try
+            {
+                Geschichte_ID = GetMaxIDGeschichte();
+
+                string sql = "INSERT INTO GESCHICHTE (ID, AUTOR_ID, LAND_ID, GENRE_ID, BEZEICHNUNG, ENTSTEHUNGSJAHR) VALUES (@ID, @AUTOR_ID, @LAND_ID, @GENRE_ID, @BEZEICHNUNG, @ENTSTEHUNGSJAHR)";
+
+                FbCommand cmd = CreateCommand();
+                cmd.CommandText = sql;
+                cmd.Parameters.AddWithValue("@ID", Geschichte_ID);
+                cmd.Parameters.AddWithValue("@AUTOR_ID", 1);
+                cmd.Parameters.AddWithValue("@LAND_ID", 1);
+                cmd.Parameters.AddWithValue("@GENRE_ID", 1);
+                cmd.Parameters.AddWithValue("@BEZEICHNUNG", Bezeichnung);
+                cmd.Parameters.AddWithValue("@ENTSTEHUNGSJAHR", Entstehungsjahr);
+               
+                DoExecuteCommand(cmd);
+
+                CommitTransaction();
+            }
+            catch (Exception ex)
+            {
+                RollbackTransaction();
+                throw ex;
+            }
+
+            return Geschichte_ID;
+        }
+
+        /* API Helpers */
+
+        protected int GetMaxIDGeschichte()
+        {
+            int result = -1;
+
+            FbCommand cmd = CreateCommand();
+            cmd.CommandText = "SELECT GEN_ID(GESCHICHTE_ID_INC, 1) FROM RDB$DATABASE";
+            result = Convert.ToInt32(DoExecuteScalar(cmd));
+
+            return result;
+        }
     }
  }
 
