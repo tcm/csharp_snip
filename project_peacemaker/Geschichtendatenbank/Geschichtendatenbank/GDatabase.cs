@@ -249,7 +249,7 @@ namespace Geschichtendatenbank
             return DoQuery(cmd);
         }
 
-        public int InsertGeschichte(string Bezeichnung, short Entstehungsjahr)
+        public int InsertGeschichte(string Bezeichnung, short Entstehungsjahr, int Autor_ID, int Genre_ID, int Land_ID)
         {
             int Geschichte_ID = 0;
 
@@ -263,12 +263,12 @@ namespace Geschichtendatenbank
                 FbCommand cmd = CreateCommand();
                 cmd.CommandText = sql;
                 cmd.Parameters.AddWithValue("@ID", Geschichte_ID);
-                cmd.Parameters.AddWithValue("@AUTOR_ID", 1);
-                cmd.Parameters.AddWithValue("@LAND_ID", 1);
-                cmd.Parameters.AddWithValue("@GENRE_ID", 1);
                 cmd.Parameters.AddWithValue("@BEZEICHNUNG", Bezeichnung);
                 cmd.Parameters.AddWithValue("@ENTSTEHUNGSJAHR", Entstehungsjahr);
-               
+                cmd.Parameters.AddWithValue("@AUTOR_ID", Autor_ID);
+                cmd.Parameters.AddWithValue("@GENRE_ID", Genre_ID);
+                cmd.Parameters.AddWithValue("@LAND_ID", Land_ID);
+                
                 DoExecuteCommand(cmd);
 
                 CommitTransaction();
@@ -280,6 +280,33 @@ namespace Geschichtendatenbank
             }
 
             return Geschichte_ID;
+        }
+
+        public DataSet QueryAutorComboBox()
+        {
+            string sql = "SELECT ID, NAME FROM AUTOR;";
+
+            FbCommand cmd = CreateCommand();
+            cmd.CommandText = sql;
+            return DoQuery(cmd);
+        }
+
+        public DataSet QueryGenreComboBox()
+        {
+            string sql = "SELECT ID, BEZEICHNUNG FROM GENRE;";
+
+            FbCommand cmd = CreateCommand();
+            cmd.CommandText = sql;
+            return DoQuery(cmd);
+        }
+
+        public DataSet QueryLandComboBox()
+        {
+            string sql = "SELECT ID, BEZEICHNUNG FROM LAND;";
+
+            FbCommand cmd = CreateCommand();
+            cmd.CommandText = sql;
+            return DoQuery(cmd);
         }
 
         /* API Helpers */

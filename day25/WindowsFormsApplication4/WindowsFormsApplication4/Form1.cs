@@ -13,7 +13,7 @@ namespace WindowsFormsApplication4
 {
     public partial class Form1 : Form
     {
-        string connectionString = "Server=192.168.0.67;Database=PASS;User ID=testuser;Password=testuser;";
+        string connectionString = "Server=localhost;Database=PASS;User ID=testuser;Password=testuser;";
         SqlConnection dbcon;
         SqlCommand selectcmd;
         SqlDataAdapter da;

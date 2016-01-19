@@ -14,29 +14,59 @@ namespace Geschichtendatenbank
     {
         private GDatabase database;
 
+        DataSet dsAutorComboBox;
+        DataSet dsGenreComboBox;
+        DataSet dsLandComboBox;
+
         public EditGeschichteDialog(GDatabase database)
         {
             this.database = database;
             InitializeComponent();
+
+            /* ComboxBox AUTOR füllen. */
+            this.dsAutorComboBox = database.QueryAutorComboBox();
+            this.Autor_comboBox.DataSource = dsAutorComboBox.Tables[0];
+            this.Autor_comboBox.DisplayMember = "NAME";
+            this.Autor_comboBox.ValueMember = "ID";
+
+            /* ComboxBox GENRE füllen. */
+            this.dsGenreComboBox = database.QueryGenreComboBox();
+            this.Genre_comboBox.DataSource = dsGenreComboBox.Tables[0];
+            this.Genre_comboBox.DisplayMember = "BEZEICHNUNG";
+            this.Genre_comboBox.ValueMember = "ID";
+
+            /* ComboxBox LAND füllen. */
+            this.dsLandComboBox = database.QueryLandComboBox();
+            this.Land_comboBox.DataSource = dsLandComboBox.Tables[0];
+            this.Land_comboBox.DisplayMember = "BEZEICHNUNG";
+            this.Land_comboBox.ValueMember = "ID";
         }
 
         private void Speichern_button_Click(object sender, EventArgs e)
         {
             int Geschichte_ID;
 
-            string titel;
-            short entstehungsjahr = short.MinValue;
+            string Titel;
+            short Entstehungsjahr = short.MinValue;
+            int Autor_ID;
+            int Genre_ID;
+            int Land_ID;
 
-            titel = Titel_textBox.Text;
-            entstehungsjahr = Convert.ToInt16(Entstehungsjahr_textBox.Text);
+            Titel = Titel_textBox.Text;
+            Entstehungsjahr = Convert.ToInt16(Entstehungsjahr_textBox.Text);
+            Autor_ID = Convert.ToInt32(Autor_comboBox.SelectedValue);
+            Genre_ID = Convert.ToInt32(Genre_comboBox.SelectedValue);
+            Land_ID = Convert.ToInt32(Land_comboBox.SelectedValue);
 
             /* -------------------------------------------------------------------*/
             /* Datensatz speichern.                                               */
             /* -------------------------------------------------------------------*/
-            Geschichte_ID = database.InsertGeschichte(titel, entstehungsjahr);
+            Geschichte_ID = database.InsertGeschichte(Titel, Entstehungsjahr, Autor_ID, Genre_ID, Land_ID);
+
             if ( Geschichte_ID > 0)
             {
                 ID_textBox.Text = Geschichte_ID.ToString();
+               
             }
             else
             {
@@ -67,6 +97,8 @@ namespace Geschichtendatenbank
             Titel_textBox.Text = "";
             Entstehungsjahr_textBox.Text = "";
         }
+
+      
 
        
 

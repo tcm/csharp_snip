@@ -122,6 +122,7 @@
             this.Autor_comboBox.Name = "Autor_comboBox";
             this.Autor_comboBox.Size = new System.Drawing.Size(145, 21);
             this.Autor_comboBox.TabIndex = 8;
+           
             // 
             // label4
             // 
