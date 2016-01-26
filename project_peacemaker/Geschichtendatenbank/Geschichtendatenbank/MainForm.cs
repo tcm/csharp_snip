@@ -20,6 +20,8 @@ namespace Geschichtendatenbank
     public partial class MainForm : Form
     {
         private GDatabase database = new GDatabase();
+        private int Selected_Geschichte_ID;
+
 
         public MainForm()
         {
@@ -181,8 +183,13 @@ namespace Geschichtendatenbank
         {
            Int32 selectedRowCount = MainForm_Uebersicht_dataGridView.Rows.GetRowCount(DataGridViewElementStates.Selected);
 
-          if (selectedRowCount > 0)
-            {
+          if (selectedRowCount > 0) 
+          {
+                /* -------------------------------------------------------- */
+                /* Den Wert der angewählten Zeile immer zwischenspeichern.  */
+                /* -------------------------------------------------------- */
+              this.Selected_Geschichte_ID = Convert.ToInt32(MainForm_Uebersicht_dataGridView.Rows[e.RowIndex].Cells["ID"].FormattedValue);
+
                 /* Code für  Multiselect = True (default)
                 for (int i = 0; i < selectedRowCount; i++)
                 {
@@ -257,7 +264,7 @@ namespace Geschichtendatenbank
 
         private void neueGeschichteAnlegenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EditGeschichteDialog dialog = new EditGeschichteDialog(this.database);
+            EditGeschichteDialog dialog = new EditGeschichteDialog(this.database, this.Selected_Geschichte_ID);
             dialog.Show(this);
         }
 

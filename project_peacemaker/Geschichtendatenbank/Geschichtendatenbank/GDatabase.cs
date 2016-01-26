@@ -239,6 +239,16 @@ namespace Geschichtendatenbank
             return DoQuery(cmd);  
         }
 
+        public DataSet QueryEditGeschichteDialog(int Geschichte_ID)
+        {
+            string sql = "SELECT * FROM GESCHICHTE WHERE ID  = @Geschichte_ID;";
+
+            FbCommand cmd = CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@Geschichte_ID", Geschichte_ID);
+            return DoQuery(cmd);
+        }
+
         public DataSet QueryMainFormFiguren(int Geschichte_ID)
         {
             string sql = "SELECT VORNAME, NAME FROM V_FIGUREN WHERE GESCHICHTE_ID  = @Geschichte_ID;";
@@ -249,7 +259,7 @@ namespace Geschichtendatenbank
             return DoQuery(cmd);
         }
 
-        public int InsertGeschichte(string Bezeichnung, short Entstehungsjahr, int Autor_ID, int Genre_ID, int Land_ID)
+        public int InsertGeschichte(string Bezeichnung, short Entstehungsjahr, int Autor_ID, int Genre_ID, int Land_ID, string Text )
         {
             int Geschichte_ID = 0;
 
@@ -258,7 +268,7 @@ namespace Geschichtendatenbank
             {
                 Geschichte_ID = GetMaxIDGeschichte();
 
-                string sql = "INSERT INTO GESCHICHTE (ID, AUTOR_ID, LAND_ID, GENRE_ID, BEZEICHNUNG, ENTSTEHUNGSJAHR) VALUES (@ID, @AUTOR_ID, @LAND_ID, @GENRE_ID, @BEZEICHNUNG, @ENTSTEHUNGSJAHR)";
+                string sql = "INSERT INTO GESCHICHTE (ID, AUTOR_ID, LAND_ID, GENRE_ID, BEZEICHNUNG, ENTSTEHUNGSJAHR, TEXT) VALUES (@ID, @AUTOR_ID, @LAND_ID, @GENRE_ID, @BEZEICHNUNG, @ENTSTEHUNGSJAHR, @TEXT)";
 
                 FbCommand cmd = CreateCommand();
                 cmd.CommandText = sql;
@@ -268,6 +278,7 @@ namespace Geschichtendatenbank
                 cmd.Parameters.AddWithValue("@AUTOR_ID", Autor_ID);
                 cmd.Parameters.AddWithValue("@GENRE_ID", Genre_ID);
                 cmd.Parameters.AddWithValue("@LAND_ID", Land_ID);
+                cmd.Parameters.AddWithValue("@TEXT", Text);
                 
                 DoExecuteCommand(cmd);
 
