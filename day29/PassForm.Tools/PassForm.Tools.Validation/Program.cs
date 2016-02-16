@@ -10,7 +10,7 @@ namespace PassForm.Tools.Validation
     {
         static void Main(string[] args)
         {
-            TestCustomRegex regExp = new TestCustomRegex();
+            var regExp = new TestCustomRegex();
 
             Console.WriteLine(Environment.NewLine + "TestpatternTelefonNumber():");
             Console.WriteLine("-------------------------------------------------");
@@ -48,7 +48,14 @@ namespace PassForm.Tools.Validation
             Console.WriteLine("-------------------------------------------------");
             regExp.TestpatternZIPCodeAlpha();
 
+            Console.WriteLine(Environment.NewLine + "combineArrayStringWithSpace():");
+            Console.WriteLine("-------------------------------------------------");
+            string[] animals = {"Cow", "Lion", "Sheep", "Bear" };
+            string strOutput = "";
 
+            var str = new StringFunctions();
+            strOutput = str.combineArrayStringWithSpace(animals);
+            Console.WriteLine(strOutput);
 
 
             Console.Write(Environment.NewLine + "Press any key to continue . . . ");
