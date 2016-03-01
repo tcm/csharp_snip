@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
+public interface ICustomRegex
+{
+    bool Is_Regex(RegexPattern ConstPattern, string StringIn);
+}
+
 public enum RegexPattern
 {
     PatternTelefonNumber,
@@ -20,7 +25,7 @@ public enum RegexPattern
 
 namespace PassForm.Tools.Validation
 {
-    public class CustomRegex
+    public class CustomRegex : ICustomRegex
     {
         private string pattern;
 

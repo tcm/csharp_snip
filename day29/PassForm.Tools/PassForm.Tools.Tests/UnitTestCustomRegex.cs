@@ -2,12 +2,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections; 
 
-
+interface IUnitTestCustomRegex
+{
+    void TestMethodPatternEmailAddress();
+    void TestMethodPatternTelefonNumber();
+}
 
 namespace PassForm.Tools.Tests
 {
     [TestClass]
-    public class UnitTestCustomRegex
+    public class UnitTestCustomRegex : IUnitTestCustomRegex
     {
         [TestMethod]
         public void TestMethodPatternEmailAddress()

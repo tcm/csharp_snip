@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public interface IStringFuntions
+{
+    string combineArrayStringWithSpace(string[] StringArray);
+}
+
 namespace PassForm.Tools.Validation
 {
-    public class StringFunctions
+    public class StringFunctions : IStringFuntions
     {
         private int _classid;
         private string _name;
@@ -15,7 +20,7 @@ namespace PassForm.Tools.Validation
         {
         }
 
-        public StringFunctions(int classId,string Name)
+        public StringFunctions(int classId, string Name)
         {
             this._classid = classId;
             this._name = Name;

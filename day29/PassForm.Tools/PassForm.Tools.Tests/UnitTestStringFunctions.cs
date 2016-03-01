@@ -2,10 +2,17 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PassForm.Tools.Validation;
 
+interface IUnitTestStringFuntions
+{
+    void Test_EmptyString_combineArrayStringWithSpace();
+    void Test_NormalString_combineArrayStringWithSpace();
+    void Test_ClassStringFunctions();
+}
+
 namespace PassForm.Tools.Tests
 {
     [TestClass]
-    public class UnitTestStringFunctions
+    public class UnitTestStringFunctions : IUnitTestStringFuntions
     {
         [TestMethod]
         public void Test_EmptyString_combineArrayStringWithSpace()

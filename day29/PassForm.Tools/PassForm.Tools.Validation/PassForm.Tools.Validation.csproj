@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StringFunctions.cs" />
-    <Compile Include="TestCustomRegex.cs" />
     <Compile Include="CustomRegex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
