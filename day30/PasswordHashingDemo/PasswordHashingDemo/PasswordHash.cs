@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 interface IPasswordHash
 {
     string Generate_HashValue(string StringIn);
-    string Generate_Random_String(int Length);
+    string Generate_Random_Seed(int Length);
 }
 
 namespace PasswordHashingDemo
@@ -16,6 +16,7 @@ namespace PasswordHashingDemo
     class PasswordHash : IPasswordHash
     {
     private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
+
 
     private static byte RollDice(byte numberSides)
     {
@@ -27,26 +28,24 @@ namespace PasswordHashingDemo
         // Fill the array with a random value.
         rngCsp.GetBytes(randomNumber);
          
-        return (byte)randomNumber[0];
+        return (byte)((randomNumber[0] % numberSides));
     } 
 
-    public string Generate_Random_String(int LengthIn)
+    public string Generate_Random_Seed(int LengthIn)
     {
-        string StringOut = "";
+        const byte numberSides = 16;  // Anzahl des Ziffernvorrats
         byte[] array = new byte[LengthIn];
         
+        // byte-Array mit Zufallswerten füllen.
+        for (int i = 0; i <= array.Length - 1; i++ )        
+            array[i] = RollDice(numberSides);
 
-        for (int i = 0; i <= LengthIn; i++ )
-        {
-         
-            array[i] = RollDice(15);
-        }
-            
-
-        // TODO: Hier müssen die Werte noch als String aneinandergefügt werden
-        //       und vorher in ab 10 in Hexwerte gewandelt werden.
-
-        return StringOut;
+        // Umwandeln in eine String mit Hex-Zahlen.
+        var StringHex = new StringBuilder(array.Length * 2);
+        foreach (byte b in array)
+            StringHex.AppendFormat("{0:x}",b);
+       
+        return StringHex.ToString();
     }
 
     public string Generate_HashValue(string StringIn)
