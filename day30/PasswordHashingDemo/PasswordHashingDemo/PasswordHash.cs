@@ -7,8 +7,7 @@ using System.Security.Cryptography;
 
 interface IPasswordHash
 {
-    string Generate_HashValue(string StringIn);
-    string Generate_Random_Seed(int Length);
+    string[] GetHashValues();
 }
 
 namespace PasswordHashingDemo
@@ -17,38 +16,68 @@ namespace PasswordHashingDemo
     {
     private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
 
+    private string password = null;
+   
+    public PasswordHash(string inPassword)
+	{
+		password = inPassword;      
+	}
 
+    public string [] GetHashValues()
+    {
+        string hash1 = null;
+        string seed = null;
+
+        string[] array = new string[2];
+
+        hash1 = Generate_HashValue(this.password);
+        seed = Generate_RandomSeed(hash1);
+
+        array[0] = seed;
+        array[1]= Generate_HashValue(seed + hash1);
+
+        return array;
+
+    }
+    
     private static byte RollDice(byte numberSides)
     {
         if (numberSides <= 0)
             throw new ArgumentOutOfRangeException("numberSides");
 
-        // Create a byte array to hold the random value.
+        /* ---------------------------------------------- */
+        /* Create a byte array to hold the random value. */
+        /* ----------------------------------------------*/
         byte[] randomNumber = new byte[1];
-        // Fill the array with a random value.
+        /* ----------------------------------------------*/
+        /* fill the array with a random value.           */
+        /* ----------------------------------------------*/
         rngCsp.GetBytes(randomNumber);
          
-        return (byte)((randomNumber[0] % numberSides));
+        return (byte)((randomNumber[0] % numberSides)); // 0-Werte einschließen, ansonsten + 1.
     } 
 
-    public string Generate_Random_Seed(int LengthIn)
+    private string Generate_RandomSeed(string StringIn)
     {
         const byte numberSides = 16;  // Anzahl des Ziffernvorrats
-        byte[] array = new byte[LengthIn];
+        byte[] array = new byte[StringIn.Length];
         
-        // byte-Array mit Zufallswerten füllen.
+        /* -------------------------------------------- */
+        /* byte-Array mit Zufallswerten füllen.         */
+        /* -------------------------------------------- */
         for (int i = 0; i <= array.Length - 1; i++ )        
             array[i] = RollDice(numberSides);
-
-        // Umwandeln in eine String mit Hex-Zahlen.
+        /* -------------------------------------------- */
+        /* Umwandeln in eine String mit Hex-Zahlen.     */
+        /* -------------------------------------------- */
         var StringHex = new StringBuilder(array.Length * 2);
         foreach (byte b in array)
             StringHex.AppendFormat("{0:x}",b);
-       
+
         return StringHex.ToString();
     }
 
-    public string Generate_HashValue(string StringIn)
+    private string Generate_HashValue(string StringIn)
     {
         var StringOut = new StringBuilder();
         byte[] hashValue;
@@ -58,11 +87,14 @@ namespace PasswordHashingDemo
         // Hier passierts!
         hashValue = mySHA256.ComputeHash(enc.GetBytes(StringIn));
 
-        // Byte-Array in String umwandeln.
+        /* ----------------------------------------------*/
+        /* Byte-Array in String umwandeln.               */
+        /* ----------------------------------------------*/
         foreach (Byte b in hashValue)
             StringOut.Append(b.ToString("x2"));
 
         return StringOut.ToString();
+     
     }
 
   }
