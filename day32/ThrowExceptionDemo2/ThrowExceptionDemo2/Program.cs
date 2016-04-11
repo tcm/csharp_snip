@@ -13,10 +13,10 @@ namespace ThrowExceptionDemo2
             var p = new Person();
 
             //p.name = "blub";
-            p.name = null;
+            //p.name = null;
             //p.name = "Schrödinger";
 
-            PrintPersonInfo(p);
+            PrintPersonInfo(null);
 
 
             Console.Write("Press any key to continue . . . ");
@@ -26,7 +26,7 @@ namespace ThrowExceptionDemo2
         private static void PrintPersonInfo(Person p)
         {
             if (p == null)
-                throw new ArgumentNullException("p");
+                throw new MyPrivateArgumentNullException("p") { zusatzinfos = "blub" };
             if (p.name == null)
                 throw new ArgumentException("The Name property is null.", "p");
 
