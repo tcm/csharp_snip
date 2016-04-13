@@ -9,8 +9,5 @@ namespace ThrowExceptionDemo2
     class Person
     {
         public string name;
-
-
-
     }
 }

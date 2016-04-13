@@ -13,10 +13,18 @@ namespace ThrowExceptionDemo2
             var p = new Person();
 
             //p.name = "blub";
-            //p.name = null;
             //p.name = "Schrödinger";
-
-            PrintPersonInfo(null);
+            try
+            {
+                 PrintPersonInfo(null);
+                 //PrintPersonInfo(p);
+            }
+            catch ( MyPrivateArgumentNullException ex)
+            {
+                Console.WriteLine(ex.Zusatzinfos);
+                throw ex;
+            }
+            
 
 
             Console.Write("Press any key to continue . . . ");
@@ -26,7 +34,7 @@ namespace ThrowExceptionDemo2
         private static void PrintPersonInfo(Person p)
         {
             if (p == null)
-                throw new MyPrivateArgumentNullException("p") { zusatzinfos = "blub" };
+                throw new MyPrivateArgumentNullException() { Zusatzinfos = "Das Objekt wurde nicht intialisiert." };
             if (p.name == null)
                 throw new ArgumentException("The Name property is null.", "p");
 
