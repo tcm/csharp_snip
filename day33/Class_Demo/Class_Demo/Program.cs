@@ -21,6 +21,7 @@ namespace Class_Demo
 			
 			Console.WriteLine(o_Creature.GetSize());
 			o_Creature.PrintCreatureType();
+			o_Creature.GetOvarienSize();
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
