@@ -17,8 +17,14 @@ public enum GenderType
 public interface ICreature
 {
 	double GetSize();
+	bool SetSize(double inSize);
+	
 	double GetSpeed();
+	bool SetSpeed(double inSpeed);
+	
 	GenderType GetGender();
+	bool SetGender(GenderType inGender);
+	
 	void PrintCreatureType();
 
 }
@@ -30,31 +36,59 @@ namespace Class_Demo
 	/// </summary>
 	public abstract class Creature : ICreature
 	{
-		protected double Size;
-		protected double Speed;
-		protected GenderType Gender;
+		private double Size;
+		private double Speed;
+		private GenderType Gender;
 		
-		public Creature(int inSize, int inSpeed, GenderType inGender)
+		public Creature()
 		{
-			Size = inSize;
-			Speed = inSpeed;
-			Gender = inGender;
 			Console.WriteLine("You have created a creature.");
 		}
 		
+		// Size
 		public double GetSize()
 		{
 			return this.Size;
 		}
 		
+		public bool SetSize( double inSize )
+		{
+			if ( inSize <= 1 )
+			{
+				return false;
+			}
+			
+			this.Size = inSize;
+			return true;
+		}
+		
+		// Speed
 		public double GetSpeed()
 		{
 			return this.Speed;
 		}
 		
+		public bool SetSpeed( double inSpeed )
+		{
+			if ( inSpeed <= 1 )
+			{
+				return false;
+			}
+			
+			this.Speed = inSpeed;
+			return true;
+		}
+		
+		// Gender
 		public GenderType GetGender()
 		{
 			return this.Gender;
+		}
+		
+		public bool SetGender(GenderType inGender)
+		{
+			this.Gender = inGender;
+			return true;
 		}
 		
 		public abstract void PrintCreatureType();

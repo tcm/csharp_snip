@@ -19,8 +19,7 @@ namespace Class_Demo
 	/// </summary>
 	public class Ant : Creature, ICreature, IAnt
 	{
-		public Ant( int intSize, int inSpeed, GenderType inGender) :
-			base(intSize, inSpeed, inGender)																	
+		public Ant()																
 		{
 			Console.WriteLine("You have created a Ant.");
 		}
@@ -32,7 +31,8 @@ namespace Class_Demo
 		
 		public double GetOvarienSize()
 		{
-			return 0.6 * this.Size;
+			return 0.6  * base.GetSize();
+			// return 0.6 * this.Size;
 		} 
 		
 		
