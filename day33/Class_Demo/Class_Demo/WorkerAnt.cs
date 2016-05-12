@@ -17,22 +17,21 @@ namespace Class_Demo
 	/// <summary>
 	/// Description of Ant.
 	/// </summary>
-	public class Ant : Creature, ICreature, IAnt
+	public class WorkerAnt : Creature, ICreature, IAnt
 	{
-		public Ant()																
+		public WorkerAnt()																
 		{
-			Console.WriteLine("You have created a Ant.");
+			Console.WriteLine("You have created a WorkerAnt.");
 		}
 		
 		public override void PrintCreatureType()
 		{
-			Console.WriteLine("Ant");
+			Console.WriteLine("WorkerAnt");
 		}
 		
 		public double GetOvarienSize()
 		{
-			return 0.6  * base.GetSize();
-			// return 0.6 * this.Size;
+			return 0.1  * base.GetSize();
 		} 
 		
 		

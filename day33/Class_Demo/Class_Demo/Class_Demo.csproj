@@ -48,7 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ant.cs" />
+    <Compile Include="QueenAnt.cs" />
+    <Compile Include="WorkerAnt.cs" />
     <Compile Include="Creature.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

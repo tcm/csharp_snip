@@ -53,7 +53,7 @@ namespace Class_Demo
 		
 		public bool SetSize( double inSize )
 		{
-			if ( inSize <= 1 )
+			if ( inSize <= 1 && inSize <= 10)
 			{
 				return false;
 			}
@@ -70,7 +70,7 @@ namespace Class_Demo
 		
 		public bool SetSpeed( double inSpeed )
 		{
-			if ( inSpeed <= 1 )
+			if ( inSpeed <= 1 && inSpeed <= 100)
 			{
 				return false;
 			}

@@ -17,12 +17,10 @@ namespace Class_Demo
 		public static void Main(string[] args)
 		{
 			int errorCount = 0;
-			string reply;
 			
+			var o_Creature = new WorkerAnt();
 			
-			var o_Creature = new Ant();
-			
-			if ( !o_Creature.SetSize(2.3) )
+			if ( !o_Creature.SetSize(5.2) )
 			{
 				Console.WriteLine("SetSize failed");
 				errorCount++;
