@@ -4,7 +4,6 @@
  * Date: 27.04.2016
  * Time: 14:07
  * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
 
@@ -42,7 +41,7 @@ namespace Class_Demo
 		
 		public Creature()
 		{
-			Console.WriteLine("You have created a creature.");
+			Console.WriteLine("You have created a Creature.");
 		}
 		
 		// Size

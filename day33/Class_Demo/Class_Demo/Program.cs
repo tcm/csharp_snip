@@ -17,8 +17,9 @@ namespace Class_Demo
 		public static void Main(string[] args)
 		{
 			int errorCount = 0;
+					
+			var o_Creature = AntFactoryV1.Get(AntType.WorkerAnt);
 			
-			var o_Creature = new WorkerAnt();
 			
 			if ( !o_Creature.SetSize(5.2) )
 			{
@@ -37,7 +38,7 @@ namespace Class_Demo
 			}
 			if (errorCount > 0)
 			{
-				Console.WriteLine("Could not set all mamber variables!");
+				Console.WriteLine("Could not set all member variables!");
 			}
 		
 			// Print Members;
@@ -46,7 +47,7 @@ namespace Class_Demo
 			
 			o_Creature.PrintCreatureType();
 			
-			Console.WriteLine(o_Creature.GetOvarienSize());
+			// Console.WriteLine(o_Creature.GetOvarienSize());
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
