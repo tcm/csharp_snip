@@ -20,7 +20,7 @@ namespace Class_Demo
 			Console.WriteLine("");
 			Create_Ant(AntType.QueenAnt, 3.1, 1.3, GenderType.Female);
 			Console.WriteLine("");
-			Create_Ant(AntType.WorkerAnt, 1.3, 1.6, GenderType.Male);
+			Create_Ant(AntType.MaleAnt, 1.3, 1.6, GenderType.Male);
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
