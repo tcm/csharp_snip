@@ -10,7 +10,8 @@ using System;
 public enum AntType
 {
 	QueenAnt,
-	WorkerAnt
+	WorkerAnt,
+	MaleAnt
 }
 
 namespace Class_Demo
@@ -21,7 +22,7 @@ namespace Class_Demo
 	static class AntFactoryV1
 	{
 		
-		public static ICreature Get(AntType antType)
+		public static IAnt Get(AntType antType)
 		{
 			switch (antType)
 			{	
@@ -29,6 +30,8 @@ namespace Class_Demo
 					return new QueenAnt();
 				case AntType.WorkerAnt:
 					return new WorkerAnt();
+				case AntType.MaleAnt:
+					return new MaleAnt();
 				default:
 					throw new NotImplementedException();
 			}

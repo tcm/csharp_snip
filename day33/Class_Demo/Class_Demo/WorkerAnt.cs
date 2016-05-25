@@ -7,17 +7,12 @@
  */
 using System;
 
-public interface IAnt
-{
-	double GetOvarienSize();
-}
-
 namespace Class_Demo
 {
 	/// <summary>
 	/// Description of Ant.
 	/// </summary>
-	public class WorkerAnt : Creature, ICreature, IAnt
+	public class WorkerAnt : Creature, IAnt
 	{
 		public WorkerAnt()																
 		{
@@ -32,8 +27,6 @@ namespace Class_Demo
 		public double GetOvarienSize()
 		{
 			return 0.1  * base.GetSize();
-		} 
-		
-		
+		} 	
 	}
 }

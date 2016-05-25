@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AntFactoryV1.cs" />
+    <Compile Include="IAnt.cs" />
+    <Compile Include="MaleAnt.cs" />
     <Compile Include="QueenAnt.cs" />
     <Compile Include="WorkerAnt.cs" />
     <Compile Include="Creature.cs" />

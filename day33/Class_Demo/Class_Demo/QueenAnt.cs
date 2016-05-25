@@ -13,7 +13,7 @@ namespace Class_Demo
 	/// <summary>
 	/// Description of QueenAnt.
 	/// </summary>
-	public class QueenAnt  : Creature, ICreature, IAnt
+	public class QueenAnt  : Creature, IAnt
 	{
 		public QueenAnt()
 		{

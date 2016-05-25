@@ -13,7 +13,7 @@ public enum GenderType
 	Female
 }
 
-public interface ICreature
+/* public interface ICreature
 {
 	double GetSize();
 	bool SetSize(double inSize);
@@ -26,14 +26,14 @@ public interface ICreature
 	
 	void PrintCreatureType();
 
-}
+} */
 
 namespace Class_Demo
 {
 	/// <summary>
 	/// Description of Creature.
 	/// </summary>
-	public abstract class Creature : ICreature
+	public abstract class Creature 
 	{
 		private double Size;
 		private double Speed;
@@ -90,8 +90,6 @@ namespace Class_Demo
 			return true;
 		}
 		
-		public abstract void PrintCreatureType();
-		
-		
+		public abstract void PrintCreatureType();	
 	}
 }
