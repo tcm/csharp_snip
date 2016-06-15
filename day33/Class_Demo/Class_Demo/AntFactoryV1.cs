@@ -17,7 +17,7 @@ public enum AntType
 namespace Class_Demo
 {
 	/// <summary>
-	/// Description of FactoryV1.
+	/// Factory mit 'case'. Ab Framework 1.0
 	/// </summary>
 	static class AntFactoryV1
 	{
