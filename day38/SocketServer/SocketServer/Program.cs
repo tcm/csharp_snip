@@ -16,7 +16,9 @@ namespace SocketServer
         static void Main(string[] args)
         {
 
-            var ep = new IPEndPoint(IPAddress.Loopback, 1234);
+            var ep = new IPEndPoint(IPAddress.Any, 1234);
+            // var ep = new IPEndPoint(IPAddress.Loopback, 1234);
+          
             var listener = new TcpListener(ep);
             listener.Start();
 
@@ -43,7 +45,7 @@ namespace SocketServer
                 Console.WriteLine(message);
   
             
-                byte[] bytes = System.Text.Encoding.Unicode.GetBytes("Thank you for your message.");
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes("Thank you for your message.");
                 sender.GetStream().Write(bytes, 0, bytes.Length);
             }
 
@@ -52,7 +54,9 @@ namespace SocketServer
         // Sends the message string using the bytes provided.  
         private static string cleanMessage(byte[] bytes)
         {
-            string message = System.Text.Encoding.Unicode.GetString(bytes);
+            // string message = System.Text.Encoding.Unicode.GetString(bytes);
+            string message = System.Text.Encoding.UTF8.GetString(bytes);
+
             string messageToPrint = null;
 
             foreach (var nullChar in message)
@@ -65,11 +69,6 @@ namespace SocketServer
             return messageToPrint;
         }
 
-        // Sends the message string using the bytes provided.  
-        private static void sendMessage(byte[] bytes, TcpClient client)
-        {
-            client.GetStream().Write(bytes, 0, bytes.Length); // Send the stream
-        }
 
      
 
