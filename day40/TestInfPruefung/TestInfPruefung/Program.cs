@@ -10,9 +10,10 @@ namespace TestInfPruefung
     {
         static void Main(string[] args)
         {
-            
-            //Console.ReadKey(true);
-            //Console.WriteLine("Taste drücken.");
+           
+           
+            /* Console.ReadKey(true);
+            Console.WriteLine("Taste drücken."); */
 
         }
     }
