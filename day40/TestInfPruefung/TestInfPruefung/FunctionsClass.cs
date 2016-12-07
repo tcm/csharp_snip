@@ -12,7 +12,7 @@ namespace TestInfPruefung
         /* Kleinste negative Zahl */
         public int func_w1(ref int[] array)
         {
-            int w1 = -1;
+            int w1 = 0;
 
             for (int i = 0; i < array.GetLength(0); i++)
             {
@@ -31,7 +31,7 @@ namespace TestInfPruefung
 
         # region func_w2
         /* Mittlere quadratische Abweichung */
-        public static double func_w2(ref int[] array)
+        public double func_w2(ref int[] array)
         {
             double w2 = 0;
             double M = 0;       /* Arithmetisches Mittel */
@@ -67,7 +67,7 @@ namespace TestInfPruefung
 
         # region func_w3
         /* Summenbildung */
-        public static int func_w3(ref int[] array)
+        public int func_w3(ref int[] array)
         {
             int w3 = 0;
             int summand = 0;
