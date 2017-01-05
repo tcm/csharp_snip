@@ -36,7 +36,7 @@ namespace ReadWriteCsv
 		/// <param name="row">The row to be written</param>
 		public void WriteRow(CsvRow row)
 		{
-			StringBuilder builder = new StringBuilder();
+			var builder = new StringBuilder();
 			bool firstColumn = true;
 			foreach (string value in row)
 			{

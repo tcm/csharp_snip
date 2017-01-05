@@ -15,11 +15,11 @@ namespace Csv_Bizerba
 	{
 		public static void Main(string[] args)
 		{
-			//CreateSQLiteDatabase();
-			//CreateTableSQLiteDatabase();
-			FillTableSQLiteDatabase();
+			// CreateSQLiteDatabase();
+			// CreateTableSQLiteDatabase();
+			// FillTableSQLiteDatabase();
 			
-			// ReadBizerbaFile ();
+			ReadBizerbaFile ();
 			
 			
 			Console.Write("Press any key to continue . . . ");
@@ -40,13 +40,13 @@ namespace Csv_Bizerba
 			
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
-			
-			sql = "CREATE TABLE highscores (name VARCHAR(20), score INT)";
+
+            sql = "CREATE TABLE `MELDE_PSS` ( `PREFIX` TEXT, `BELEGNUMMER` TEXT, `ZUSATZFELD` TEXT, `VERSANDCODE` TEXT, `VERSANDTAG` TEXT, `GEWICHT` NUMERIC, `PREIS` NUMERIC, `VERFOLGUNGSNUMMER` TEXT )";
 			var command = new SQLiteCommand(sql, m_dbConnection);
 			command.ExecuteNonQuery();
 		}
 		
-		static void FillTableSQLiteDatabase()
+		static void FillTableSQLiteDatabase(string inPrefix, string inBelegnummer, string inZusatzfeld, string inVersandcode, string inVersandtag)
 		{
 			SQLiteConnection m_dbConnection;
 			string sql;
@@ -54,7 +54,8 @@ namespace Csv_Bizerba
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
 			
-		    sql = "insert into highscores (name, score) values ('Me2', 10001)";
+		    sql = "INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG) VALUES ('" + inPrefix + "','" + inBelegnummer + "','" + inZusatzfeld + "','" + inVersandcode + "','" + inVersandtag + "')";
+            Console.WriteLine(sql);
 			var command = new SQLiteCommand(sql, m_dbConnection);
 			command.ExecuteNonQuery();
 		}
@@ -69,12 +70,24 @@ namespace Csv_Bizerba
 				var row = new CsvRow();
 				while (reader.ReadRow(row))
 				{
-					foreach (string s in row)
-					{
-					Console.Write(s);
-					Console.Write(" ");
-					}
-					Console.WriteLine();
+
+                    Console.Write(row[0]);
+                    Console.Write(row[1]);
+                    Console.Write(row[2]);
+                    Console.Write(row[3]);
+                    FillTableSQLiteDatabase(row[0], row[1], row[2], row[3], row[4]);
+
+                    /*for (int i = 0; i < row.Count; i++ )
+                    {
+                        Console.Write(row[i]);
+                        Console.Write(" ");
+                    } */
+                        /* foreach (string s in row.)
+                        {
+                        Console.Write(s);
+                        Console.Write(" ");
+                        } */
+                        Console.WriteLine();
 				}
 			}
 		}
