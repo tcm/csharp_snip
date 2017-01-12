@@ -8,6 +8,7 @@
 using System;
 using ReadWriteCsv;
 using System.Data.SQLite;
+using System.Globalization;
 
 namespace Csv_Bizerba
 {
@@ -41,23 +42,37 @@ namespace Csv_Bizerba
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
 
-            sql = "CREATE TABLE `MELDE_PSS` ( `PREFIX` TEXT, `BELEGNUMMER` TEXT, `ZUSATZFELD` TEXT, `VERSANDCODE` TEXT, `VERSANDTAG` TEXT, `GEWICHT` NUMERIC, `PREIS` NUMERIC, `VERFOLGUNGSNUMMER` TEXT )";
-			var command = new SQLiteCommand(sql, m_dbConnection);
+            sql = "CREATE TABLE `MELDE_PSS` ( `PREFIX` TEXT, `BELEGNUMMER` TEXT, `ZUSATZFELD` TEXT, `VERSANDCODE` TEXT, `VERSANDTAG` TEXT, `GEWICHT` NUMERIC, `PREIS` NUMERIC, `VERFOLGUNGSNUMMER` TEXT )";			
+            var command = new SQLiteCommand(sql, m_dbConnection);
 			command.ExecuteNonQuery();
 		}
 		
-		static void FillTableSQLiteDatabase(string inPrefix, string inBelegnummer, string inZusatzfeld, string inVersandcode, string inVersandtag)
+		static void FillTableSQLiteDatabase(BizerbaData data)
 		{
 			SQLiteConnection m_dbConnection;
-			string sql;
 			
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
-			
-		    sql = "INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG) VALUES ('" + inPrefix + "','" + inBelegnummer + "','" + inZusatzfeld + "','" + inVersandcode + "','" + inVersandtag + "')";
-            Console.WriteLine(sql);
-			var command = new SQLiteCommand(sql, m_dbConnection);
-			command.ExecuteNonQuery();
+
+	      
+            SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS) VALUES (@par1, @par2, @par3, @par4, @par5, @par6, @par7)", m_dbConnection);
+            insertSQL.Parameters.AddWithValue("@par1", data.Prefix);
+            insertSQL.Parameters.AddWithValue("@par2", data.Belegnummer);
+            insertSQL.Parameters.AddWithValue("@par3", data.Zusatzfeld);
+            insertSQL.Parameters.AddWithValue("@par4", data.Versandcode);
+            insertSQL.Parameters.AddWithValue("@par5", data.Versandtag);
+            insertSQL.Parameters.AddWithValue("@par6", data.Gewicht);
+            insertSQL.Parameters.AddWithValue("@par7", data.Preis);
+
+            try
+            {
+                insertSQL.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }    
+         
 		}
 		
 		static void ReadBizerbaFile()
@@ -68,26 +83,31 @@ namespace Csv_Bizerba
 			using (var reader = new CsvFileReader(@"c:\pss\melde_1.txt"))
 			{
 				var row = new CsvRow();
+                var data = new BizerbaData();
+
 				while (reader.ReadRow(row))
 				{
 
                     Console.Write(row[0]);
-                    Console.Write(row[1]);
-                    Console.Write(row[2]);
-                    Console.Write(row[3]);
-                    FillTableSQLiteDatabase(row[0], row[1], row[2], row[3], row[4]);
+                    Console.Write(" " + row[1]);
+                    Console.Write(" " + row[2]);
+                    Console.Write(" " + row[3]);
+                    Console.Write(" " + row[4]);
+                    Console.Write(" " + row[5]);
+                    Console.Write(" " + row[6]);
+                   
+                    Console.WriteLine();
+             
+                    data.Prefix = row[0];
+                    data.Belegnummer = row[1];
+                    data.Zusatzfeld = row[2];
+                    data.Versandcode = row[3];
+                    data.Versandtag = row[4];
+                    data.Gewicht = Convert.ToDecimal(row[5]);
+                    data.Preis = Convert.ToDecimal(row[6]);
 
-                    /*for (int i = 0; i < row.Count; i++ )
-                    {
-                        Console.Write(row[i]);
-                        Console.Write(" ");
-                    } */
-                        /* foreach (string s in row.)
-                        {
-                        Console.Write(s);
-                        Console.Write(" ");
-                        } */
-                        Console.WriteLine();
+                    FillTableSQLiteDatabase(data);
+
 				}
 			}
 		}
