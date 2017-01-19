@@ -8,7 +8,7 @@
 using System;
 using ReadWriteCsv;
 using System.Data.SQLite;
-using System.Globalization;
+
 
 namespace Csv_Bizerba
 {
@@ -47,7 +47,7 @@ namespace Csv_Bizerba
 			command.ExecuteNonQuery();
 		}
 		
-		static void FillTableSQLiteDatabase(BizerbaData data)
+		static void FillTableSQLiteDatabase(PssData data)
 		{
 			SQLiteConnection m_dbConnection;
 			
@@ -55,7 +55,7 @@ namespace Csv_Bizerba
 			m_dbConnection.Open();
 
 	      
-            SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS) VALUES (@par1, @par2, @par3, @par4, @par5, @par6, @par7)", m_dbConnection);
+            SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par1, @par2, @par3, @par4, @par5, @par6, @par7, @par8)", m_dbConnection);
             insertSQL.Parameters.AddWithValue("@par1", data.Prefix);
             insertSQL.Parameters.AddWithValue("@par2", data.Belegnummer);
             insertSQL.Parameters.AddWithValue("@par3", data.Zusatzfeld);
@@ -63,6 +63,7 @@ namespace Csv_Bizerba
             insertSQL.Parameters.AddWithValue("@par5", data.Versandtag);
             insertSQL.Parameters.AddWithValue("@par6", data.Gewicht);
             insertSQL.Parameters.AddWithValue("@par7", data.Preis);
+            insertSQL.Parameters.AddWithValue("@par8", data.Verfolgungsnummer);
 
             try
             {
@@ -83,33 +84,32 @@ namespace Csv_Bizerba
 			using (var reader = new CsvFileReader(@"c:\pss\melde_1.txt"))
 			{
 				var row = new CsvRow();
-                var data = new BizerbaData();
+                var csvLine = new PssData();
 
 				while (reader.ReadRow(row))
 				{
-
-                    Console.Write(row[0]);
-                    Console.Write(" " + row[1]);
-                    Console.Write(" " + row[2]);
-                    Console.Write(" " + row[3]);
-                    Console.Write(" " + row[4]);
-                    Console.Write(" " + row[5]);
-                    Console.Write(" " + row[6]);
-                   
+				
+					 // Bildschirm-Ausgabe
+					for ( int i = 0 ; i < row.Count; i++ )
+					{
+						Console.Write(row[i] + ";"); 
+						
+					}       
                     Console.WriteLine();
-             
-                    data.Prefix = row[0];
-                    data.Belegnummer = row[1];
-                    data.Zusatzfeld = row[2];
-                    data.Versandcode = row[3];
-                    data.Versandtag = row[4];
-                    data.Gewicht = Convert.ToDecimal(row[5]);
-                    data.Preis = Convert.ToDecimal(row[6]);
+                
+                   	csvLine.Prefix = row[0];
+                   	csvLine.Belegnummer = row[1];
+                   	csvLine.Zusatzfeld = row[2];
+                   	csvLine.Versandcode = row[3];
+                   	csvLine.Versandtag = row[4];
+                   	csvLine.Gewicht = Convert.ToDecimal(row[5]);
+                   	csvLine.Preis = Convert.ToDecimal(row[6]);
+                   	// csvLine.Verfolgungsnummer = row[7]; 
 
-                    FillTableSQLiteDatabase(data);
-
+                   FillTableSQLiteDatabase(csvLine);
 				}
-			}
+				
+				}
 		}
 		catch (System.IO.FileNotFoundException)
 		{

@@ -7,8 +7,9 @@ namespace Csv_Bizerba
 {
    
    
-    class BizerbaData
+    class PssData
     {
+    	
         public string Prefix
         {
             get;
@@ -50,10 +51,11 @@ namespace Csv_Bizerba
             get;
             set;
         }
-  
-  
-
-
-
+        
+        public String Verfolgungsnummer
+        {
+        	get;
+        	set;
+        }
     }
 }
