@@ -6,7 +6,8 @@
  * 
  */
 using System;
-using ReadWriteCsv;
+using CSD;
+using System.Data;
 using System.Data.SQLite;
 
 
@@ -47,7 +48,7 @@ namespace Csv_Bizerba
 			command.ExecuteNonQuery();
 		}
 		
-		static void FillTableSQLiteDatabase(PssData data)
+		static void FillTableSQLiteDatabase(DataTable data)
 		{
 			SQLiteConnection m_dbConnection;
 			
@@ -56,14 +57,14 @@ namespace Csv_Bizerba
 
 	      
             SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par1, @par2, @par3, @par4, @par5, @par6, @par7, @par8)", m_dbConnection);
-            insertSQL.Parameters.AddWithValue("@par1", data.Prefix);
+            /* insertSQL.Parameters.AddWithValue("@par1", data.Prefix);
             insertSQL.Parameters.AddWithValue("@par2", data.Belegnummer);
             insertSQL.Parameters.AddWithValue("@par3", data.Zusatzfeld);
             insertSQL.Parameters.AddWithValue("@par4", data.Versandcode);
             insertSQL.Parameters.AddWithValue("@par5", data.Versandtag);
             insertSQL.Parameters.AddWithValue("@par6", data.Gewicht);
             insertSQL.Parameters.AddWithValue("@par7", data.Preis);
-            insertSQL.Parameters.AddWithValue("@par8", data.Verfolgungsnummer);
+            insertSQL.Parameters.AddWithValue("@par8", data.Verfolgungsnummer); */
 
             try
             {
@@ -78,61 +79,33 @@ namespace Csv_Bizerba
 		
 		static void ReadBizerbaFile()
 		{
-		try
-		{
-			// Read data from CSV file
-			using (var reader = new CsvFileReader(@"c:\pss\melde_1.txt"))
-			{
-				var row = new CsvRow();
-                var csvLine = new PssData();
-
-				while (reader.ReadRow(row))
-				{
-				
-					 // Bildschirm-Ausgabe
-					for ( int i = 0 ; i < row.Count; i++ )
-					{
-						Console.Write(row[i] + ";"); 
-						
-					}       
-                    Console.WriteLine();
-                
-                   	csvLine.Prefix = row[0];
-                   	csvLine.Belegnummer = row[1];
-                   	csvLine.Zusatzfeld = row[2];
-                   	csvLine.Versandcode = row[3];
-                   	csvLine.Versandtag = row[4];
-                   	csvLine.Gewicht = Convert.ToDecimal(row[5]);
-                   	csvLine.Preis = Convert.ToDecimal(row[6]);
-                   	// csvLine.Verfolgungsnummer = row[7]; 
-
-                   FillTableSQLiteDatabase(csvLine);
-				}
-				
-				}
-		}
-		catch (System.IO.FileNotFoundException)
-		{
-			Console.WriteLine("File not found!");
-		}
-		catch (System.IO.DirectoryNotFoundException)
-		{
-			Console.WriteLine("Directory not found!");
-		}
-		catch (UnauthorizedAccessException)
-		{
-			Console.WriteLine("Access denied!");
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine("General error!");
-			Console.WriteLine(e.Message);
-		}
+		var dtData = new DataTable();
+		var oFH = new CSD.clsFileHandler(@"c:\pss\melde_1.txt");
 		
-		}
+		oFH.Delimiter= ";";
+		oFH.HeaderRow = -1;
+		dtData = oFH.CSVToTable();
+		
+	
+  		foreach (DataRow row in dtData.Rows)
+    	 {
+    	   foreach (var item in row.ItemArray)
+    	   {
+           	 Console.WriteLine("Value:"+item);
+    	   }
+    	 }
+		
+		
+	/*	foreach ( DataRow dr in dtData.Rows )
+		{
+    		string name = dr["columnname"].ToString();
+		} */
+			
+			
+		
 		
 		
 		}
-		
-		
+	}
 }
+
