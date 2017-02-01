@@ -23,9 +23,8 @@ namespace Csv_Bizerba
 			
 			ReadBizerbaFile ();
 			
-			
-			Console.Write("Press any key to continue . . . ");
-			Console.ReadKey(true);
+			//Console.Write("Press any key to continue . . . ");
+			//Console.ReadKey(true);
 		}
 		
 		static void CreateSQLiteDatabase()
@@ -55,25 +54,40 @@ namespace Csv_Bizerba
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
 
-	      
-            SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par1, @par2, @par3, @par4, @par5, @par6, @par7, @par8)", m_dbConnection);
-            /* insertSQL.Parameters.AddWithValue("@par1", data.Prefix);
-            insertSQL.Parameters.AddWithValue("@par2", data.Belegnummer);
-            insertSQL.Parameters.AddWithValue("@par3", data.Zusatzfeld);
-            insertSQL.Parameters.AddWithValue("@par4", data.Versandcode);
-            insertSQL.Parameters.AddWithValue("@par5", data.Versandtag);
-            insertSQL.Parameters.AddWithValue("@par6", data.Gewicht);
-            insertSQL.Parameters.AddWithValue("@par7", data.Preis);
-            insertSQL.Parameters.AddWithValue("@par8", data.Verfolgungsnummer); */
-
-            try
-            {
-                insertSQL.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }    
+	        foreach (DataRow row in data.Rows)
+    	 	{
+	        	string Prefix = row[0].ToString();
+	        	string Belegnummer = row[1].ToString();
+	        	string Zusatzfeld = row[2].ToString();
+	        	string Versandcode = row[3].ToString();
+	        	string Versandtag = row[4].ToString();
+	        	//
+	        	//
+	        	string Verfolgungsnummer = row[7].ToString();
+	        	
+	        	SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, VERFOLGUNGSNUMMER) VALUES (@par0, @par1, @par2, @par3, @par4, @par7)", m_dbConnection);	
+	        	insertSQL.Parameters.AddWithValue("@par0", Prefix);
+	        	insertSQL.Parameters.AddWithValue("@par1", Belegnummer);
+	        	insertSQL.Parameters.AddWithValue("@par2", Zusatzfeld);
+	        	insertSQL.Parameters.AddWithValue("@par3", Versandcode);
+	        	insertSQL.Parameters.AddWithValue("@par4", Versandtag);
+	        	//
+	        	//
+	            insertSQL.Parameters.AddWithValue("@par7", Verfolgungsnummer);
+	        	
+	        	
+	        	try
+            	{
+                	insertSQL.ExecuteNonQuery();
+            	}
+            	catch (Exception ex)
+            	{
+                	throw new Exception(ex.Message);
+            	}    
+	        }
+    	 
+            // SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par1, @par2, @par3, @par4, @par5, @par6, @par7, @par8)", m_dbConnection);
+            
          
 		}
 		
@@ -86,26 +100,26 @@ namespace Csv_Bizerba
 		oFH.HeaderRow = -1;
 		dtData = oFH.CSVToTable();
 		
-	
-  		foreach (DataRow row in dtData.Rows)
-    	 {
-    	   foreach (var item in row.ItemArray)
-    	   {
-           	 Console.WriteLine("Value:"+item);
-    	   }
-    	 }
-		
-		
-	/*	foreach ( DataRow dr in dtData.Rows )
+		// Debug-Ausgabe
+		foreach (DataRow row in dtData.Rows)
 		{
-    		string name = dr["columnname"].ToString();
-		} */
-			
-			
-		
-		
-		
+    	 foreach (var item in row.ItemArray)
+    	   {
+              	
+           	 if (item == "")
+           	 {
+           	 System.Diagnostics.Debug.Write("- ");
+           	 }
+           	 else
+           	 {
+           	 System.Diagnostics.Debug.Write(item+" ");	
+           	 }
+    	   }
+    	   System.Diagnostics.Debug.WriteLine(""); 
 		}
+		
+  		FillTableSQLiteDatabase(dtData);	
+	  }
 	}
 }
 
