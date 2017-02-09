@@ -61,18 +61,21 @@ namespace Csv_Bizerba
 	        	string Zusatzfeld = row[2].ToString();
 	        	string Versandcode = row[3].ToString();
 	        	string Versandtag = row[4].ToString();
-	        	//
-	        	//
+	        	double Gewicht = 4.44;
+	        	double Preis = 3.33;
+	        	
 	        	string Verfolgungsnummer = row[7].ToString();
 	        	
-	        	SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, VERFOLGUNGSNUMMER) VALUES (@par0, @par1, @par2, @par3, @par4, @par7)", m_dbConnection);	
+	        	
+	        	
+	        	SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par0, @par1, @par2, @par3, @par4, @par5, @par6, @par7)", m_dbConnection);	
 	        	insertSQL.Parameters.AddWithValue("@par0", Prefix);
 	        	insertSQL.Parameters.AddWithValue("@par1", Belegnummer);
 	        	insertSQL.Parameters.AddWithValue("@par2", Zusatzfeld);
 	        	insertSQL.Parameters.AddWithValue("@par3", Versandcode);
 	        	insertSQL.Parameters.AddWithValue("@par4", Versandtag);
-	        	//
-	        	//
+	        	insertSQL.Parameters.AddWithValue("@par5", Gewicht);
+	        	insertSQL.Parameters.AddWithValue("@par6", Preis);
 	            insertSQL.Parameters.AddWithValue("@par7", Verfolgungsnummer);
 	        	
 	        	
@@ -86,9 +89,6 @@ namespace Csv_Bizerba
             	}    
 	        }
     	 
-            // SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par1, @par2, @par3, @par4, @par5, @par6, @par7, @par8)", m_dbConnection);
-            
-         
 		}
 		
 		static void ReadBizerbaFile()
