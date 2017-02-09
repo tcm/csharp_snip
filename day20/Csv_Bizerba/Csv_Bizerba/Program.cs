@@ -19,9 +19,10 @@ namespace Csv_Bizerba
 		{
 			// CreateSQLiteDatabase();
 			// CreateTableSQLiteDatabase();
-			// FillTableSQLiteDatabase();
+			
 			
 			ReadBizerbaFile ();
+		
 			
 			//Console.Write("Press any key to continue . . . ");
 			//Console.ReadKey(true);
@@ -60,13 +61,15 @@ namespace Csv_Bizerba
 	        	string Belegnummer = row[1].ToString();
 	        	string Zusatzfeld = row[2].ToString();
 	        	string Versandcode = row[3].ToString();
-	        	string Versandtag = row[4].ToString();
-	        	double Gewicht = 4.44;
-	        	double Preis = 3.33;
+	        	string Versandtag = row[4].ToString(); 
+	        
+	        	double Gewicht;
+	        	double.TryParse(row[5].ToString(), out Gewicht);
+	        
+	        	double Preis;
+	        	double.TryParse(row[6].ToString(), out Preis);
 	        	
 	        	string Verfolgungsnummer = row[7].ToString();
-	        	
-	        	
 	        	
 	        	SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par0, @par1, @par2, @par3, @par4, @par5, @par6, @par7)", m_dbConnection);	
 	        	insertSQL.Parameters.AddWithValue("@par0", Prefix);
@@ -77,7 +80,6 @@ namespace Csv_Bizerba
 	        	insertSQL.Parameters.AddWithValue("@par5", Gewicht);
 	        	insertSQL.Parameters.AddWithValue("@par6", Preis);
 	            insertSQL.Parameters.AddWithValue("@par7", Verfolgungsnummer);
-	        	
 	        	
 	        	try
             	{
@@ -119,6 +121,7 @@ namespace Csv_Bizerba
 		}
 		
   		FillTableSQLiteDatabase(dtData);	
+  		// FillTableSQLiteDatabase_neu(dtData);	
 	  }
 	}
 }
