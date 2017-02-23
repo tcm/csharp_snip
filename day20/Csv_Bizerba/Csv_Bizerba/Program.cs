@@ -9,6 +9,7 @@ using System;
 using CSD;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics; // wegen Conditional
 
 
 namespace Csv_Bizerba
@@ -75,7 +76,7 @@ namespace Csv_Bizerba
             
 		}
 	
-		static void FillTableSQLiteDatabase(DataTable data)
+		static void FillTableSQLiteDatabase(ref DataTable data)
 		{
 			SQLiteConnection m_dbConnection;
 			
@@ -129,31 +130,31 @@ namespace Csv_Bizerba
 		oFH.HeaderRow = -1;
 		dtData = oFH.CSVToTable();
 		
-		// Debug-Ausgabe
-		foreach (DataRow row in dtData.Rows)
-		{
-    	 foreach (var item in row.ItemArray)
-    	   {
-              	
-           	 if (item == "")
-           	 {
-           	 System.Diagnostics.Debug.Write("- ");
-           	 }
-           	 else
-           	 {
-           	 System.Diagnostics.Debug.Write(item+" ");	
-           	 }
-    	   }
-    	   System.Diagnostics.Debug.WriteLine(""); 
-		}
-		
-  		FillTableSQLiteDatabase(dtData);	
+		Debug_Print(ref dtData);
+  		FillTableSQLiteDatabase(ref dtData);	
   	
 	  }
 		
-		// [Conditional ("DEBUG")]
-		static void Debug_Print(DataTable dtData)
+		[Conditional ("DEBUG")]
+		static void Debug_Print(ref DataTable dtData)
 		{
+			// Debug-Ausgabe
+			foreach (DataRow row in dtData.Rows)
+			{
+    	 	foreach (var item in row.ItemArray)
+    	   	{
+              	
+           	 	if (item == "")
+           	 	{
+           	 	System.Diagnostics.Debug.Write("- ");
+           	 	}
+           	 	else
+           	 	{
+           	 	System.Diagnostics.Debug.Write(item+" ");	
+           	 	}
+    	   	 }
+    	   	System.Diagnostics.Debug.WriteLine(""); 
+		}
 			
 		}
 	}
