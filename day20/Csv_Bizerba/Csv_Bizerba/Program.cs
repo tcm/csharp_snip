@@ -32,34 +32,49 @@ namespace Csv_Bizerba
 			
 		}
 		
+		// Tabellen anlegen.
 		static void CreateTableSQLiteDatabase()
 		{
 			SQLiteConnection m_dbConnection;
-			string sql;
+		
 			
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
-
-            sql = "CREATE TABLE `MELDE_PSS` ( `PREFIX` TEXT, `BELEGNUMMER` TEXT, `ZUSATZFELD` TEXT, `VERSANDCODE` TEXT, `VERSANDTAG` TEXT, `GEWICHT` NUMERIC, `PREIS` NUMERIC, `VERFOLGUNGSNUMMER` TEXT )";			
-            var command = new SQLiteCommand(sql, m_dbConnection);
-			command.ExecuteNonQuery();
+			
+			
+			using (var command = new SQLiteCommand(m_dbConnection) )
+            {
+            	using (var transaction = m_dbConnection.BeginTransaction())
+            	{
+            	command.CommandText = "CREATE TABLE `MELDE_PSS` ( `PREFIX` TEXT, `BELEGNUMMER` TEXT, `ZUSATZFELD` TEXT, `VERSANDCODE` TEXT, `VERSANDTAG` TEXT, `GEWICHT` NUMERIC, `PREIS` NUMERIC, `VERFOLGUNGSNUMMER` TEXT )";
+				command.ExecuteNonQuery();
+				transaction.Commit();
+            	}
+            }
+			m_dbConnection.Close();
 		}
 		
-		
+		// SEND-Rows löschen.
 		static void Delete_SEND_DataRows()
 		{
 			SQLiteConnection m_dbConnection;
-			string sql;
 			
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
-
-            sql = "DELETE FROM MELDE_PSS where PREFIX='SEND';";			
-            var command = new SQLiteCommand(sql, m_dbConnection);
-			command.ExecuteNonQuery();
+			            
+            using (var command = new SQLiteCommand(m_dbConnection) )
+            {
+            	using (var transaction = m_dbConnection.BeginTransaction())
+            	{
+            	command.CommandText = "DELETE FROM MELDE_PSS where PREFIX='SEND';";
+				command.ExecuteNonQuery();
+				transaction.Commit();
+            	}
+            }
+            m_dbConnection.Close();
+            
 		}
-		
-		
+	
 		static void FillTableSQLiteDatabase(DataTable data)
 		{
 			SQLiteConnection m_dbConnection;
