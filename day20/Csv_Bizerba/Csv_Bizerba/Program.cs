@@ -22,10 +22,7 @@ namespace Csv_Bizerba
 			
 			
 			ReadBizerbaFile ();
-		
-			
-			//Console.Write("Press any key to continue . . . ");
-			//Console.ReadKey(true);
+			Delete_SEND_DataRows();
 		}
 		
 		static void CreateSQLiteDatabase()
@@ -47,6 +44,21 @@ namespace Csv_Bizerba
             var command = new SQLiteCommand(sql, m_dbConnection);
 			command.ExecuteNonQuery();
 		}
+		
+		
+		static void Delete_SEND_DataRows()
+		{
+			SQLiteConnection m_dbConnection;
+			string sql;
+			
+			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
+			m_dbConnection.Open();
+
+            sql = "DELETE FROM MELDE_PSS where PREFIX='SEND';";			
+            var command = new SQLiteCommand(sql, m_dbConnection);
+			command.ExecuteNonQuery();
+		}
+		
 		
 		static void FillTableSQLiteDatabase(DataTable data)
 		{
@@ -121,8 +133,14 @@ namespace Csv_Bizerba
 		}
 		
   		FillTableSQLiteDatabase(dtData);	
-  		// FillTableSQLiteDatabase_neu(dtData);	
+  	
 	  }
+		
+		// [Conditional ("DEBUG")]
+		static void Debug_Print(DataTable dtData)
+		{
+			
+		}
 	}
 }
 
