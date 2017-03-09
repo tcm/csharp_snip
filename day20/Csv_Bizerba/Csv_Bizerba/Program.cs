@@ -18,12 +18,14 @@ namespace Csv_Bizerba
 	{
 		public static void Main(string[] args)
 		{
-			// CreateSQLiteDatabase();
-			// CreateTableSQLiteDatabase();
 			
+			//CreateSQLiteDatabase();
+			//CreateTableSQLiteDatabase();
+			
+			//DeleteAllDataRows();
 			
 			ReadBizerbaFile ();
-			Delete_SEND_DataRows();
+			DeleteSendDataRows();
 		}
 		
 		static void CreateSQLiteDatabase()
@@ -55,7 +57,48 @@ namespace Csv_Bizerba
 			m_dbConnection.Close();
 		}
 		
+		// Delete all Rows.
+		static void DeleteAllDataRows()
+		{
+			SQLiteConnection m_dbConnection;
+			
+			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
+			m_dbConnection.Open();
+			            
+            using (var command = new SQLiteCommand(m_dbConnection) )
+            {
+            	using (var transaction = m_dbConnection.BeginTransaction())
+            	{
+            	command.CommandText = "DELETE FROM MELDE_PSS;";
+				command.ExecuteNonQuery();
+				transaction.Commit();
+            	}
+            }
+            m_dbConnection.Close();
+            
+		}
+		
 		// SEND-Rows löschen.
+		static void DeleteSendDataRows()
+		{
+			SQLiteConnection m_dbConnection;
+			
+			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
+			m_dbConnection.Open();
+			            
+            using (var command = new SQLiteCommand(m_dbConnection) )
+            {
+            	using (var transaction = m_dbConnection.BeginTransaction())
+            	{
+            	command.CommandText = "DELETE FROM MELDE_PSS where PREFIX='SEND';";
+				command.ExecuteNonQuery();
+				transaction.Commit();
+            	}
+            }
+            m_dbConnection.Close();
+            
+		}
+		
 		static void Delete_SEND_DataRows()
 		{
 			SQLiteConnection m_dbConnection;
