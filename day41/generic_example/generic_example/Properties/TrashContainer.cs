@@ -1,7 +1,8 @@
 ﻿using System;
 
 namespace generic_example
-{
+{	
+	// LIFO-Queue
 	public class TrashContainer <T>
 	{
 		T[] trash;
@@ -23,6 +24,12 @@ namespace generic_example
 		{
 			idx--;
 			return this.trash [this.idx];
+		}
+
+		public void Clear()
+		{
+			this.idx = 0;
+			this.trash = new T[this.trash.Length];
 		}
 	}
 }

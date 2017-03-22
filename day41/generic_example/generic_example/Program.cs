@@ -26,6 +26,12 @@ namespace generic_example
 			s = Cs.Pop ();
 			Console.WriteLine ("s: {0}", s); 
 
+			Cs.Clear ();
+			Console.WriteLine ();
+			// s = Cs.Pop (); "Logischerweise IndexOutOfRange
+			Console.WriteLine ("s: {0}", s); 
+
+
 		}
 	}
 }
