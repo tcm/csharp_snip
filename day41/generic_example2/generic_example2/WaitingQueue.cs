@@ -2,10 +2,13 @@
 
 namespace generic_example2
 {
+	// Bei der Definition steht in der eckigen Klammer <T>
+	// und beim Aufruf steht hier der Typ, z.B. <int>
 	public class WaitingQueue<T>
 	{
 		T[] queue;
-		int idx = 0;
+		int idxIn = 0;
+		int idxOut = 0;
 
 		public WaitingQueue (int size)
 		{
@@ -14,15 +17,31 @@ namespace generic_example2
 
 		public void Push (T item)
 		{
+			queue [idxIn] = item;
+			idxIn++;
 		}
 			
 		public T Pop()
 		{
-			return this.queue [idx];;
+			T item;
+
+			if (idxOut < idxIn) // Enthält unsere Queue noch nicht verarbeitete Elemente
+			{
+				item =  this.queue [idxOut];
+				idxOut++;
+			} 
+			else
+				item =  default(T);
+
+			return  item;
 		}
 
 		public void Clear()
 		{
+			idxIn = 0;
+			idxOut = 0;
+
+			this.queue = new T[this.queue.Length];
 		}
 	}
 }
