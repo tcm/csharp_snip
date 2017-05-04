@@ -22,10 +22,16 @@ namespace Csv_Bizerba
 			//CreateSQLiteDatabase();
 			//CreateTableSQLiteDatabase();
 			
-			//DeleteAllDataRows();
+			DeleteAllDataRows("MELDE_PSS");
+			DeleteAllDataRows("BELEGNUMMER_UNIQUE");
+			
+			FillTableBELEGNUMMER_UNIQUE();
+			                  
 			
 			ReadBizerbaFile ();
 			DeleteSendDataRows();
+			
+			
 		}
 		
 		static void CreateSQLiteDatabase()
@@ -53,12 +59,19 @@ namespace Csv_Bizerba
 				command.ExecuteNonQuery();
 				transaction.Commit();
             	}
+            	
+            	using (var transaction = m_dbConnection.BeginTransaction())
+            	{
+            	command.CommandText = "CREATE TABLE 'BELEGNUMMER_UNIQUE' ( `BELEGNUMMER` TEXT NOT NULL, `ANZAHL` INTEGER, `GEWICHT` NUMERIC, `PREIS` NUMERIC, PRIMARY KEY(`BELEGNUMMER`) )";
+				command.ExecuteNonQuery();
+				transaction.Commit();
+            	}
             }
 			m_dbConnection.Close();
 		}
 		
 		// Delete all Rows.
-		static void DeleteAllDataRows()
+		static void DeleteAllDataRows(string TableName)
 		{
 			SQLiteConnection m_dbConnection;
 			
@@ -69,7 +82,7 @@ namespace Csv_Bizerba
             {
             	using (var transaction = m_dbConnection.BeginTransaction())
             	{
-            	command.CommandText = "DELETE FROM MELDE_PSS;";
+            	command.CommandText = "DELETE FROM " + TableName;
 				command.ExecuteNonQuery();
 				transaction.Commit();
             	}
@@ -99,7 +112,9 @@ namespace Csv_Bizerba
             
 		}
 		
-		static void Delete_SEND_DataRows()
+		
+		// Belegnummer und Anzahl schreiben.
+		static void FillTableBELEGNUMMER_UNIQUE()
 		{
 			SQLiteConnection m_dbConnection;
 			
@@ -110,16 +125,18 @@ namespace Csv_Bizerba
             {
             	using (var transaction = m_dbConnection.BeginTransaction())
             	{
-            	command.CommandText = "DELETE FROM MELDE_PSS where PREFIX='SEND';";
-				command.ExecuteNonQuery();
+            	command.CommandText = "INSERT INTO BELEGNUMMER_UNIQUE (BELEGNUMMER, ANZAHL) " +
+            		 "SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*) > 1";
+            	command.ExecuteNonQuery();
 				transaction.Commit();
             	}
             }
             m_dbConnection.Close();
             
-		}
-	
-		static void FillTableSQLiteDatabase(ref DataTable data)
+		} 
+		
+		
+		static void FillTableMELDE_PSS(ref DataTable data)
 		{
 			SQLiteConnection m_dbConnection;
 			
@@ -174,7 +191,7 @@ namespace Csv_Bizerba
 		dtData = oFH.CSVToTable();
 		
 		Debug_Print(ref dtData);
-  		FillTableSQLiteDatabase(ref dtData);	
+  		FillTableMELDE_PSS(ref dtData);	
   	
 	  }
 		
