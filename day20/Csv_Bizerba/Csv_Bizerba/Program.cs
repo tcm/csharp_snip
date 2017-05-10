@@ -25,18 +25,17 @@ namespace Csv_Bizerba
 			DeleteAllDataRows("MELDE_PSS");
 			DeleteAllDataRows("BELEGNUMMER_UNIQUE");
 			
-			FillTableBELEGNUMMER_UNIQUE();
-			                  
-			
 			ReadBizerbaFile ();
 			DeleteSendDataRows();
+			
+			FillTableBELEGNUMMER_UNIQUE();
 			
 			
 		}
 		
 		static void CreateSQLiteDatabase()
 		{
-			SQLiteConnection m_dbConnection;
+			// SQLiteConnection m_dbConnection;
 			SQLiteConnection.CreateFile("Bizerba.sqlite");
 			
 		}
@@ -125,14 +124,35 @@ namespace Csv_Bizerba
             {
             	using (var transaction = m_dbConnection.BeginTransaction())
             	{
+
             	command.CommandText = "INSERT INTO BELEGNUMMER_UNIQUE (BELEGNUMMER, ANZAHL) " +
-            		"SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*) > 1;";
-            	command.ExecuteNonQuery();
+            	"SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*);";
+				command.ExecuteNonQuery();
 				transaction.Commit();
             	}
             }
-            m_dbConnection.Close();
-            
+            m_dbConnection.Close();   
+		} 
+		
+		// Gewicht und Preis berechnen.
+		static void UpdateTableBELEGNUMMER_UNIQUE()
+		{
+			SQLiteConnection m_dbConnection;
+			
+			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
+			m_dbConnection.Open();
+			            
+            using (var command = new SQLiteCommand(m_dbConnection) )
+            {
+            	using (var transaction = m_dbConnection.BeginTransaction())
+            	{
+            	// command.CommandText = "" 
+            	command.ExecuteNonQuery();
+				transaction.Commit();
+            	}
+           
+            }
+            m_dbConnection.Close();         
 		} 
 		
 		
@@ -204,16 +224,16 @@ namespace Csv_Bizerba
     	 	foreach (var item in row.ItemArray)
     	   	{
               	
-           	 	if (item == "")
+    	 		if (item.ToString() == "")
            	 	{
-           	 	System.Diagnostics.Debug.Write("- ");
+           	 	Debug.Write("- ");
            	 	}
            	 	else
            	 	{
-           	 	System.Diagnostics.Debug.Write(item+" ");	
+           	 	Debug.Write(item+" ");	
            	 	}
     	   	 }
-    	   	System.Diagnostics.Debug.WriteLine(""); 
+    	   	Debug.WriteLine(""); 
 		}
 			
 		}
