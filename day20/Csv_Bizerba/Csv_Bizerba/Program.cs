@@ -126,7 +126,7 @@ namespace Csv_Bizerba
             	using (var transaction = m_dbConnection.BeginTransaction())
             	{
             	command.CommandText = "INSERT INTO BELEGNUMMER_UNIQUE (BELEGNUMMER, ANZAHL) " +
-            		 "SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*) > 1";
+            		"SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*) > 1;";
             	command.ExecuteNonQuery();
 				transaction.Commit();
             	}
