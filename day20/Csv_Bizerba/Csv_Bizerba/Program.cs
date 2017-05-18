@@ -29,6 +29,7 @@ namespace Csv_Bizerba
 			DeleteSendDataRows();
 			
 			FillTableBELEGNUMMER_UNIQUE();
+			UpdateTableBELEGNUMMER_UNIQUE();
 			
 			
 		}
@@ -141,17 +142,29 @@ namespace Csv_Bizerba
 			
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
-			            
-            using (var command = new SQLiteCommand(m_dbConnection) )
-            {
-            	using (var transaction = m_dbConnection.BeginTransaction())
-            	{
-            	// command.CommandText = "" 
-            	command.ExecuteNonQuery();
-				transaction.Commit();
-            	}
-           
-            }
+			
+
+			var rs1 = new SQLiteDataAdapter("select BELEGNUMMER, ANZAHL from BELEGNUMMER_UNIQUE", m_dbConnection); 
+			var dt1 = new DataTable();
+			rs1.Fill(dt1);
+			
+			Debug_Print(ref dt1, "BELEGNUMMER_UNIQUE:");
+			 // Über alle Datensätze von BELEGNUMMER_UNIQUE iterieren.
+			foreach (DataRow row1 in dt1.Rows)
+			{
+				var sql = "select BELEGNUMMER, SUM(GEWICHT) AS GEWICHT, SUM(PREIS) AS PREIS from MELDE_PSS where BELEGNUMMER = '" + row1[0] + "'";
+				// Debug.WriteLine(sql);
+				var rs2 = new SQLiteDataAdapter(sql , m_dbConnection); 
+			    var dt2 = new DataTable();
+			    rs2.Fill(dt2);
+			    
+			    Debug_Print(ref dt2, "GEWICHT und PREIS:");
+			    foreach (DataRow row2 in dt2.Rows)
+			    {
+			    	
+			    }
+				
+			} 			                                     
             m_dbConnection.Close();         
 		} 
 		
@@ -179,7 +192,7 @@ namespace Csv_Bizerba
 	        	
 	        	string Verfolgungsnummer = row[7].ToString();
 	        	
-	        	SQLiteCommand insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par0, @par1, @par2, @par3, @par4, @par5, @par6, @par7)", m_dbConnection);	
+	        	var insertSQL = new SQLiteCommand("INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par0, @par1, @par2, @par3, @par4, @par5, @par6, @par7)", m_dbConnection);	
 	        	insertSQL.Parameters.AddWithValue("@par0", Prefix);
 	        	insertSQL.Parameters.AddWithValue("@par1", Belegnummer);
 	        	insertSQL.Parameters.AddWithValue("@par2", Zusatzfeld);
@@ -210,15 +223,16 @@ namespace Csv_Bizerba
 		oFH.HeaderRow = -1;
 		dtData = oFH.CSVToTable();
 		
-		Debug_Print(ref dtData);
+		Debug_Print(ref dtData, "MELDE_PSS:");
   		FillTableMELDE_PSS(ref dtData);	
   	
 	  }
 		
 		[Conditional ("DEBUG")]
-		static void Debug_Print(ref DataTable dtData)
+		static void Debug_Print(ref DataTable dtData, string comment)
 		{
 			// Debug-Ausgabe
+			Debug.WriteLine(comment);
 			foreach (DataRow row in dtData.Rows)
 			{
     	 	foreach (var item in row.ItemArray)
