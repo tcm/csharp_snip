@@ -10,6 +10,7 @@ using CSD;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics; // wegen Conditional
+using System.Globalization;
 
 
 namespace Csv_Bizerba
@@ -18,6 +19,8 @@ namespace Csv_Bizerba
 	{
 		public static void Main(string[] args)
 		{
+		
+			
 			
 			//CreateSQLiteDatabase();
 			//CreateTableSQLiteDatabase();
@@ -147,8 +150,8 @@ namespace Csv_Bizerba
 			var rs1 = new SQLiteDataAdapter("select BELEGNUMMER, ANZAHL from BELEGNUMMER_UNIQUE", m_dbConnection); 
 			var dt1 = new DataTable();
 			rs1.Fill(dt1);
-			
 			Debug_Print(ref dt1, "BELEGNUMMER_UNIQUE:");
+			
 			 // Über alle Datensätze von BELEGNUMMER_UNIQUE iterieren.
 			foreach (DataRow row1 in dt1.Rows)
 			{
@@ -159,10 +162,32 @@ namespace Csv_Bizerba
 			    rs2.Fill(dt2);
 			    
 			    Debug_Print(ref dt2, "GEWICHT und PREIS:");
-			    foreach (DataRow row2 in dt2.Rows)
-			    {
-			    	
-			    }
+			    Debug.WriteLine(dt2.Rows[0][1]);
+			    Debug.WriteLine(dt2.Rows[0][2]);
+			    
+			    // Daten in KOMNR_UNIQUE schreiben.
+			    using (var command = new SQLiteCommand(m_dbConnection) )
+            	{
+            		using (var transaction = m_dbConnection.BeginTransaction())
+            		{
+            		double Gewicht;
+            		double Preis;
+            		
+            		double.TryParse(dt2.Rows[0][1], NumberStyles.Any, CultureInfo.InvariantCulture, out Gewicht);
+            		double.TryParse(dt2.Rows[0][2], NumberStyles.Any, CultureInfo.InvariantCulture, out Preis);
+            		
+            			
+            			
+            	    var sql2 = "UPDATE BELEGNUMMER_UNIQUE SET GEWICHT="+ Gewicht +", PREIS=3 WHERE BELEGNUMMER = '" +row1[0]+ "'";
+            	    Debug.WriteLine (sql2);
+            	    // command.CommandText = sql2;
+            		// command.CommandText = "UPDATE BELEGNUMMER_UNIQUE SET GEWICHT="+ dt2.Rows[0][1] +", PREIS=3 WHERE BELEGNUMMER = '" +row1[0]+ "'";
+            		
+					command.ExecuteNonQuery();
+					transaction.Commit();
+            		}
+            	}
+			 
 				
 			} 			                                     
             m_dbConnection.Close();         
