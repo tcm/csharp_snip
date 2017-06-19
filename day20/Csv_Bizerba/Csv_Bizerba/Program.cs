@@ -10,7 +10,7 @@ using CSD;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics; // wegen Conditional
-using System.Globalization;
+
 
 
 namespace Csv_Bizerba
@@ -19,9 +19,7 @@ namespace Csv_Bizerba
 	{
 		public static void Main(string[] args)
 		{
-		
-			
-			
+	
 			//CreateSQLiteDatabase();
 			//CreateTableSQLiteDatabase();
 			
@@ -128,7 +126,6 @@ namespace Csv_Bizerba
             {
             	using (var transaction = m_dbConnection.BeginTransaction())
             	{
-
             	command.CommandText = "INSERT INTO BELEGNUMMER_UNIQUE (BELEGNUMMER, ANZAHL) " +
             	"SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*);";
 				command.ExecuteNonQuery();
@@ -146,7 +143,6 @@ namespace Csv_Bizerba
 			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
 			m_dbConnection.Open();
 			
-
 			var rs1 = new SQLiteDataAdapter("select BELEGNUMMER, ANZAHL from BELEGNUMMER_UNIQUE", m_dbConnection); 
 			var dt1 = new DataTable();
 			rs1.Fill(dt1);
@@ -156,39 +152,31 @@ namespace Csv_Bizerba
 			foreach (DataRow row1 in dt1.Rows)
 			{
 				var sql = "select BELEGNUMMER, SUM(GEWICHT) AS GEWICHT, SUM(PREIS) AS PREIS from MELDE_PSS where BELEGNUMMER = '" + row1[0] + "'";
-				// Debug.WriteLine(sql);
 				var rs2 = new SQLiteDataAdapter(sql , m_dbConnection); 
 			    var dt2 = new DataTable();
 			    rs2.Fill(dt2);
 			    
 			    Debug_Print(ref dt2, "GEWICHT und PREIS:");
-			    Debug.WriteLine(dt2.Rows[0][1]);
-			    Debug.WriteLine(dt2.Rows[0][2]);
-			    
-			    // Daten in KOMNR_UNIQUE schreiben.
+			   
+			    // Daten in BELEGNUMMER_UNIQUE schreiben.
+			    // Preis und Gewicht aktualisieren.
 			    using (var command = new SQLiteCommand(m_dbConnection) )
             	{
             		using (var transaction = m_dbConnection.BeginTransaction())
             		{
-            		double Gewicht;
-            		double Preis;
+            		string Gewicht;
+            		string Preis;
             		
-            		double.TryParse(dt2.Rows[0][1], NumberStyles.Any, CultureInfo.InvariantCulture, out Gewicht);
-            		double.TryParse(dt2.Rows[0][2], NumberStyles.Any, CultureInfo.InvariantCulture, out Preis);
+            		Gewicht = Convert.ToString(dt2.Rows[0][1]).Replace(",",".");
+            		Preis = Convert.ToString(dt2.Rows[0][2]).Replace(",",".");
             		
-            			
-            			
-            	    var sql2 = "UPDATE BELEGNUMMER_UNIQUE SET GEWICHT="+ Gewicht +", PREIS=3 WHERE BELEGNUMMER = '" +row1[0]+ "'";
-            	    Debug.WriteLine (sql2);
-            	    // command.CommandText = sql2;
-            		// command.CommandText = "UPDATE BELEGNUMMER_UNIQUE SET GEWICHT="+ dt2.Rows[0][1] +", PREIS=3 WHERE BELEGNUMMER = '" +row1[0]+ "'";
-            		
+      			    var sql2 = "UPDATE BELEGNUMMER_UNIQUE SET GEWICHT="+ Gewicht +", PREIS=" + Preis + " WHERE BELEGNUMMER = '" +row1[0]+ "'";
+      			    Debug.Print(sql2);
+            	    command.CommandText = sql2;
 					command.ExecuteNonQuery();
 					transaction.Commit();
             		}
-            	}
-			 
-				
+            	}	
 			} 			                                     
             m_dbConnection.Close();         
 		} 

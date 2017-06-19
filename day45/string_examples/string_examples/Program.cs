@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace string_examples
 {
@@ -9,13 +10,13 @@ namespace string_examples
 			string teststring = "The quick brown fox jumps over the lazy dog!";
 			string suchstring = "fox";
 
-			Console.WriteLine (teststring);
+			Debug.WriteLine (teststring);
 
 			/* teststring = ReverseMe (teststring);
 			Console.WriteLine (teststring);*/
 
 			int pos = FindExpr (teststring, suchstring);
-			Console.WriteLine (pos);
+			Debug.WriteLine (pos);
 
 		}
 
@@ -33,22 +34,36 @@ namespace string_examples
 			return new string(reverse);
 		}
 
-		public static int FindExpr( string inStr, string findStr )
+		public static int FindExpr( string text, string pattern )
 		{
-			int length = inStr.Length;
-			int length_f = findStr.Length;
-			int pos = 0;
+			int text_length    = text.Length;
+            int pattern_length = pattern.Length;
+			int position = 0;
+			int e = 0;
+			int d = 0;
+			
+			if (pattern_length > text_length) {
+   				 return -1;
+  			}
 
-			for (int i = 0; i < (length - length_f); i++) 
+			for (int c = 0; c <= text_length - pattern_length; c++) 
 			{
-				for (int j = 0; j < length_f; j++) 
-				{
-					pos = i;
-					if (inStr [i + j ] == findStr [j])
-						return pos;
+					position = e = c;
+				
+					for (d = 0; d < pattern_length; d++) {
+      					if (pattern[d] == text[e]) {
+        					e++;
+      					}
+				      	else {
+				      	  break;
+				      	}
+				      	
+				      	if (d == pattern_length) {
+     						 return position;
+    					}     
 				}
 			}
-			return 0;
+			return -1;
 		}
 
 
