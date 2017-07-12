@@ -10,13 +10,17 @@ namespace string_examples
 			string teststring = "The quick brown fox jumps over the lazy dog!";
 			string suchstring = "fox";
 
-			Debug.WriteLine (teststring);
-
+		
 			/* teststring = ReverseMe (teststring);
 			Console.WriteLine (teststring);*/
 
+			Debug.WriteLine (teststring);
 			int pos = FindExpr (teststring, suchstring);
 			Debug.WriteLine (pos);
+			
+			Debug.WriteLine (teststring);
+			int pos2 = FindExpr (teststring, suchstring);
+			Debug.WriteLine (pos2);
 
 		}
 
@@ -34,11 +38,12 @@ namespace string_examples
 			return new string(reverse);
 		}
 
+		// C-Lösung
 		public static int FindExpr( string text, string pattern )
 		{
-			int text_length    = text.Length;
+			int text_length = text.Length;
             int pattern_length = pattern.Length;
-			int position = 0;
+			int position = -1;
 			int e = 0;
 			int d = 0;
 			
@@ -46,8 +51,8 @@ namespace string_examples
    				 return -1;
   			}
 
-			for (int c = 0; c <= text_length - pattern_length; c++) 
-			{
+			
+			for (int c = 0; c <= text_length - pattern_length; c++) {
 					position = e = c;
 				
 					for (d = 0; d < pattern_length; d++) {
@@ -56,16 +61,43 @@ namespace string_examples
       					}
 				      	else {
 				      	  break;
-				      	}
-				      	
-				      	if (d == pattern_length) {
-     						 return position;
-    					}     
+				      	} 
 				}
+					
+				if (d == pattern_length) {
+     						 return position;
+    			}
+					
 			}
 			return -1;
 		}
-
-
+		
+		
+		// C#-Lösung aus Schrödinger
+		public static int FindExpr2( string text, string pattern )
+		{
+			int position = -1;
+			bool found = true;
+			
+			for (int i = 0; i < text.Length - pattern.Length; i++) {
+				
+				position = i;
+				
+				for (int j = 0; j < pattern.Length; j++) {
+					if ( text[i + j] != pattern[j]) {
+						found = false;
+						break;
+		      		}
+					if (found)
+						break;
+		    	}
+		    }
+			return position;
+	    }
+		
+		
+		
+		
+	  }
 	}
-}
+
