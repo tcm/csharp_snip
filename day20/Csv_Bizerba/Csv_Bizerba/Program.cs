@@ -19,26 +19,41 @@ namespace Csv_Bizerba
 	{
 		public static void Main(string[] args)
 		{
-	
+			string dbname = "Test.sqlite";
+			// CreateSQLiteDatabase(dbname);
+			
+			DbSqlite database = new DbSqlite("Data Source=" + dbname +";Version=3;");
+			
+			
+            if (database.Connect() == false)
+            {
+            	Console.WriteLine("Datenbankverbindung fehlgeschlagen!");
+            }
+            else
+            {
+            	database.CreateSQLiteTable();
+            	//DataSet ds1 = database.TestQuery();
+            	// Debug_Print_DS(ref ds1, "blub");
+            }
+			
 			//CreateSQLiteDatabase();
 			//CreateTableSQLiteDatabase();
 			
-			DeleteAllDataRows("MELDE_PSS");
-			DeleteAllDataRows("BELEGNUMMER_UNIQUE");
+			//DeleteAllDataRows("MELDE_PSS");
+			//DeleteAllDataRows("BELEGNUMMER_UNIQUE");
 			
-			ReadBizerbaFile ();
-			DeleteSendDataRows();
+			//ReadBizerbaFile ();
+			//DeleteSendDataRows();
 			
-			FillTableBELEGNUMMER_UNIQUE();
-			UpdateTableBELEGNUMMER_UNIQUE();
+			//FillTableBELEGNUMMER_UNIQUE();
+			//UpdateTableBELEGNUMMER_UNIQUE();
 			
 			
 		}
 		
-		static void CreateSQLiteDatabase()
+		static void CreateSQLiteDatabase(string dbname)
 		{
-			// SQLiteConnection m_dbConnection;
-			SQLiteConnection.CreateFile("Bizerba.sqlite");
+			SQLiteConnection.CreateFile(dbname);
 			
 		}
 		
@@ -146,7 +161,7 @@ namespace Csv_Bizerba
 			var rs1 = new SQLiteDataAdapter("select BELEGNUMMER, ANZAHL from BELEGNUMMER_UNIQUE", m_dbConnection); 
 			var dt1 = new DataTable();
 			rs1.Fill(dt1);
-			Debug_Print(ref dt1, "BELEGNUMMER_UNIQUE:");
+			Debug_Print_DT(ref dt1, "BELEGNUMMER_UNIQUE:");
 			
 			 // Über alle Datensätze von BELEGNUMMER_UNIQUE iterieren.
 			foreach (DataRow row1 in dt1.Rows)
@@ -156,7 +171,7 @@ namespace Csv_Bizerba
 			    var dt2 = new DataTable();
 			    rs2.Fill(dt2);
 			    
-			    Debug_Print(ref dt2, "GEWICHT und PREIS:");
+			    Debug_Print_DT(ref dt2, "GEWICHT und PREIS:");
 			   
 			    // Daten in BELEGNUMMER_UNIQUE schreiben.
 			    // Preis und Gewicht aktualisieren.
@@ -236,13 +251,13 @@ namespace Csv_Bizerba
 		oFH.HeaderRow = -1;
 		dtData = oFH.CSVToTable();
 		
-		Debug_Print(ref dtData, "MELDE_PSS:");
+		Debug_Print_DT(ref dtData, "MELDE_PSS:");
   		FillTableMELDE_PSS(ref dtData);	
   	
 	  }
 		
 		[Conditional ("DEBUG")]
-		static void Debug_Print(ref DataTable dtData, string comment)
+		static void Debug_Print_DT(ref DataTable dtData, string comment)
 		{
 			// Debug-Ausgabe
 			Debug.WriteLine(comment);
@@ -261,9 +276,51 @@ namespace Csv_Bizerba
            	 	}
     	   	 }
     	   	Debug.WriteLine(""); 
+			}
+			
+		}
+		
+		
+		[Conditional ("DEBUG")]
+		static void Debug_Print_DS(ref DataSet dsData, string comment)
+		{
+			// Debug-Ausgabe
+			Debug.WriteLine(comment);
+			
+			
+                DataTable dtData= dsData.Tables[0];
+                
+                foreach (DataRow row in dtData.Rows)
+				{
+    	 			foreach (var item in row.ItemArray)
+    	   			{
+              	
+    	 				if (item.ToString() == "")
+           	 			{
+           	 				Debug.Write("- ");
+           	 			}
+           	 			else
+           	 			{
+           	 				Debug.Write(item+" ");	
+           	 			}
+    	   	 		}
+    	   		Debug.WriteLine(""); 
+				}
+
+                /* if (dtData.Rows.Count > 0)
+                {
+                    DataRow laRow = dtData.Rows[0];  
+                    Debug.WriteLine ( laRow["BELEGNUMMER"].ToString());                 
+                } */
+			
 		}
 			
 		}
+			
+			
+			
+			
 	}
-}
+  
+
 
