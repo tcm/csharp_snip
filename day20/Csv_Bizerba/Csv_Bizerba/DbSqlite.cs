@@ -170,7 +170,120 @@ namespace Csv_Bizerba
          
         }
         
+        public void DeleteAllRows( string tablename )
+        {
+        	BeginTransaction();
+        	try
+        	{
+        		SQLiteCommand cmd = CreateCommand();
+        		string sql;
+        		
+        		/* Alle Datensätze löschen. */
+        		sql =  "DELETE FROM " + tablename;
+            	cmd.CommandText = sql;
+            	cmd.ExecuteNonQuery();
+            	CommitTransaction();
+        	}
+        	catch (Exception ex)
+            {
+                RollbackTransaction();
+                throw ex;
+            } 
+        	
+        }
         
+        public void DeleteSendRows( string tablename )
+        {
+        	BeginTransaction();
+        	try
+        	{
+        		SQLiteCommand cmd = CreateCommand();
+        		string sql;
+        		
+        		/* Alle Datensätze löschen. */
+        		sql =   "DELETE FROM " + tablename +" where PREFIX='SEND'";
+            	cmd.CommandText = sql;
+            	cmd.ExecuteNonQuery();
+            	CommitTransaction();
+        	}
+        	catch (Exception ex)
+            {
+                RollbackTransaction();
+                throw ex;
+            } 
+        	
+        }
+        
+        public void FillTable( ref DataTable data )
+        {
+        	
+        	BeginTransaction();
+        	try
+        	{
+        	   SQLiteCommand cmd = CreateCommand();
+        	   string sql;
+        		
+        	  /*  Über alle Datensätze der DataTable iterieren und in die Tabelle einfügen. */
+        	  foreach (DataRow row in data.Rows)
+    	 	  {
+	        		string Prefix = row[0].ToString();
+	        		string Belegnummer = row[1].ToString();
+	        		string Zusatzfeld = row[2].ToString();
+	        		string Versandcode = row[3].ToString();
+	        		string Versandtag = row[4].ToString(); 
+	        
+	        		double Gewicht;
+	        		double.TryParse(row[5].ToString(), out Gewicht);
+	        
+	        		double Preis;
+	        		double.TryParse(row[6].ToString(), out Preis);
+	        	
+	        		string Verfolgungsnummer = row[7].ToString();
+	        	
+	        		sql = "INSERT INTO `MELDE_PSS` (PREFIX, BELEGNUMMER, ZUSATZFELD, VERSANDCODE, VERSANDTAG, GEWICHT, PREIS, VERFOLGUNGSNUMMER) VALUES (@par0, @par1, @par2, @par3, @par4, @par5, @par6, @par7)";
+	        		cmd.CommandText = sql;
+	        		cmd.Parameters.AddWithValue("@par0", Prefix);
+	        		cmd.Parameters.AddWithValue("@par1", Belegnummer);
+	        		cmd.Parameters.AddWithValue("@par2", Zusatzfeld);
+	        		cmd.Parameters.AddWithValue("@par3", Versandcode);
+	        		cmd.Parameters.AddWithValue("@par4", Versandtag);
+	        		cmd.Parameters.AddWithValue("@par5", Gewicht);
+	        		cmd.Parameters.AddWithValue("@par6", Preis);
+	          		cmd.Parameters.AddWithValue("@par7", Verfolgungsnummer);
+	          		
+	          		cmd.ExecuteNonQuery();
+        	  }
+        	  CommitTransaction();
+        	}
+        	catch (Exception ex)
+            {
+                RollbackTransaction();
+                throw ex;
+            } 
+        }
+        
+        public void FillHelpTable()
+        {
+        	BeginTransaction();
+        	try
+        	{
+        		SQLiteCommand cmd = CreateCommand();
+        		string sql;
+        		
+        		/* Für jede Belegnummer genau einen Datensatz erzeugen. */
+        		sql = "INSERT INTO BELEGNUMMER_UNIQUE (BELEGNUMMER, ANZAHL) " +
+        			"SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*)";
+            	cmd.CommandText = sql;
+            	cmd.ExecuteNonQuery();
+            	CommitTransaction();
+        	}
+        	catch (Exception ex)
+            {
+                RollbackTransaction();
+                throw ex;
+            } 
+        	
+        }
     
 	}
 }

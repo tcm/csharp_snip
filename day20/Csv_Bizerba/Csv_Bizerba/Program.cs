@@ -20,9 +20,11 @@ namespace Csv_Bizerba
 		public static void Main(string[] args)
 		{
 			string dbname = "Test.sqlite";
+			
 			// CreateSQLiteDatabase(dbname);
 			
 			DbSqlite database = new DbSqlite("Data Source=" + dbname +";Version=3;");
+			var dtData = new DataTable();
 			
 			
             if (database.Connect() == false)
@@ -31,9 +33,25 @@ namespace Csv_Bizerba
             }
             else
             {
-            	database.CreateSQLiteTable();
+            	// database.CreateSQLiteTable();
+            	
+            	database.DeleteAllRows("MELDE_PSS");
+            	database.DeleteAllRows("BELEGNUMMER_UNIQUE");
+            	
+            	ReadFile(ref dtData);
+            	
+            	database.FillTable(ref dtData);
+            	database.DeleteSendRows("MELDE_PSS");
+            	
+            	// Hier wird in einer Hilfstabelle für jede Belegnummer
+            	// genau ein Datensatz erzeugt.
+            	database.FillHelpTable();
+            	
+            	
             	//DataSet ds1 = database.TestQuery();
             	// Debug_Print_DS(ref ds1, "blub");
+            	
+            	database.Disconnect();
             }
 			
 			//CreateSQLiteDatabase();
@@ -241,6 +259,19 @@ namespace Csv_Bizerba
 	        }
     	 
 		}
+		
+		
+		static void ReadFile(ref DataTable dtData)
+		{
+		var oFH = new CSD.clsFileHandler(@"c:\pss\melde_1.txt");
+		
+		oFH.Delimiter= ";";
+		oFH.HeaderRow = -1;
+		dtData = oFH.CSVToTable();
+		
+		Debug_Print_DT(ref dtData, "MELDE_PSS:");
+  		
+	  }
 		
 		static void ReadBizerbaFile()
 		{
