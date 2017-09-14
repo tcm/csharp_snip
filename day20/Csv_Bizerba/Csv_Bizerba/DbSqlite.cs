@@ -115,7 +115,7 @@ namespace Csv_Bizerba
             } 
         }
         
-         public DataSet DoQuery(string sql)
+         public DataTable DoQuery(string sql)
         {
             var cmd = new SQLiteCommand(connection);
             cmd.CommandText = sql;
@@ -123,13 +123,13 @@ namespace Csv_Bizerba
             return DoQuery(cmd);
         }
         
-        public DataSet DoQuery(SQLiteCommand cmd)
+        public DataTable DoQuery(SQLiteCommand cmd)
         {
-            DataSet ds = new DataSet();
+            DataTable dt = new DataTable();
             SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
-            da.Fill(ds, "Result");
+            da.Fill(dt);
 
-            return ds;
+            return dt;
         }
             
          /*
@@ -137,7 +137,7 @@ namespace Csv_Bizerba
          */
          
      
-        public DataSet TestQuery()
+        public DataTable TestQuery()
         {
             return DoQuery("SELECT * FROM MELDE_PSS");  
         }

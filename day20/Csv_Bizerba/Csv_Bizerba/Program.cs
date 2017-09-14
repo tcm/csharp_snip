@@ -48,8 +48,8 @@ namespace Csv_Bizerba
             	database.FillHelpTable();
             	
             	
-            	//DataSet ds1 = database.TestQuery();
-            	// Debug_Print_DS(ref ds1, "blub");
+            	// DataTable dt1 = database.TestQuery();
+            	// Debug_Print_DT(ref dt1, "blub");
             	
             	database.Disconnect();
             }
@@ -312,39 +312,7 @@ namespace Csv_Bizerba
 		}
 		
 		
-		[Conditional ("DEBUG")]
-		static void Debug_Print_DS(ref DataSet dsData, string comment)
-		{
-			// Debug-Ausgabe
-			Debug.WriteLine(comment);
-			
-			
-                DataTable dtData= dsData.Tables[0];
-                
-                foreach (DataRow row in dtData.Rows)
-				{
-    	 			foreach (var item in row.ItemArray)
-    	   			{
-              	
-    	 				if (item.ToString() == "")
-           	 			{
-           	 				Debug.Write("- ");
-           	 			}
-           	 			else
-           	 			{
-           	 				Debug.Write(item+" ");	
-           	 			}
-    	   	 		}
-    	   		Debug.WriteLine(""); 
-				}
-
-                /* if (dtData.Rows.Count > 0)
-                {
-                    DataRow laRow = dtData.Rows[0];  
-                    Debug.WriteLine ( laRow["BELEGNUMMER"].ToString());                 
-                } */
-			
-		}
+		
 			
 		}
 			
