@@ -26,7 +26,6 @@ namespace Csv_Bizerba
 			this.dataSource = indataSource;
 		}
 		
-		
         public SQLiteConnection Connection
         {
             get
@@ -37,7 +36,6 @@ namespace Csv_Bizerba
                 return this.connection;
             }
         }
-        
         
         public SQLiteCommand CreateCommand()
         {
@@ -116,7 +114,7 @@ namespace Csv_Bizerba
             } 
         }
         
-         public DataTable DoQuery(string sql)
+        public DataTable DoQuery(string sql)
         {
             var cmd = new SQLiteCommand(connection);
             cmd.CommandText = sql;
@@ -135,9 +133,7 @@ namespace Csv_Bizerba
             
          /*
          Command API
-         */
-         
-     
+         */ 
         public DataTable TestQuery()
         {
             return DoQuery("SELECT * FROM MELDE_PSS");  
@@ -289,12 +285,15 @@ namespace Csv_Bizerba
         public void UpdateHelpTable()
         {
         	var dt1 =  DoQuery("SELECT BELEGNUMMER, ANZAHL from BELEGNUMMER_UNIQUE");  
-        	// Print_DT(ref dt1, "BELEGNUMMER_UNIQUE:");
+        	Print_DT(ref dt1, "BELEGNUMMER_UNIQUE:");
         	
-        	 // Über alle Datensätze von BELEGNUMMER_UNIQUE iterieren.
+        	// Über alle Datensätze von BELEGNUMMER_UNIQUE iterieren.
+        	Debug.WriteLine("GEWICHT UND PREIS");
 			foreach (DataRow row in dt1.Rows)
 			{
-				Debug.WriteLine(row[0]); // BELEGNUMMER
+				// Debug.WriteLine(row[0]); // BELEGNUMMER
+				var dt2 =  DoQuery("select BELEGNUMMER, SUM(GEWICHT) AS GEWICHT, SUM(PREIS) AS PREIS from MELDE_PSS where BELEGNUMMER = '" + row[0] + "'");  
+				Print_DT(ref dt2, "");
 			}
         }
         
@@ -319,6 +318,7 @@ namespace Csv_Bizerba
     	   	 }
     	   	Debug.WriteLine(""); 
 			}
+			Debug.WriteLine("");
 			
 		}
     

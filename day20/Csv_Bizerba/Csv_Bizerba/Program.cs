@@ -49,126 +49,10 @@ namespace Csv_Bizerba
             	
             	database.UpdateHelpTable();
             	
-            	
-            	// DataTable dt1 = database.TestQuery();
-            	// Debug_Print_DT(ref dt1, "blub");
-            	
             	database.Disconnect();
-            }
+            }	
 			
-			//CreateSQLiteDatabase();
-			//CreateTableSQLiteDatabase();
-			
-			//DeleteAllDataRows("MELDE_PSS");
-			//DeleteAllDataRows("BELEGNUMMER_UNIQUE");
-			
-			//ReadBizerbaFile ();
-			//DeleteSendDataRows();
-			
-			//FillTableBELEGNUMMER_UNIQUE();
-			//UpdateTableBELEGNUMMER_UNIQUE();
-			
-			
-		}
-		
-		static void CreateSQLiteDatabase(string dbname)
-		{
-			SQLiteConnection.CreateFile(dbname);
-			
-		}
-		
-		// Tabellen anlegen.
-		static void CreateTableSQLiteDatabase()
-		{
-			SQLiteConnection m_dbConnection;
-		
-			
-			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
-			m_dbConnection.Open();
-			
-			
-			using (var command = new SQLiteCommand(m_dbConnection) )
-            {
-            	using (var transaction = m_dbConnection.BeginTransaction())
-            	{
-            	command.CommandText = "CREATE TABLE `MELDE_PSS` ( `PREFIX` TEXT, `BELEGNUMMER` TEXT, `ZUSATZFELD` TEXT, `VERSANDCODE` TEXT, `VERSANDTAG` TEXT, `GEWICHT` NUMERIC, `PREIS` NUMERIC, `VERFOLGUNGSNUMMER` TEXT )";
-				command.ExecuteNonQuery();
-				transaction.Commit();
-            	}
-            	
-            	using (var transaction = m_dbConnection.BeginTransaction())
-            	{
-            	command.CommandText = "CREATE TABLE 'BELEGNUMMER_UNIQUE' ( `BELEGNUMMER` TEXT NOT NULL, `ANZAHL` INTEGER, `GEWICHT` NUMERIC, `PREIS` NUMERIC, PRIMARY KEY(`BELEGNUMMER`) )";
-				command.ExecuteNonQuery();
-				transaction.Commit();
-            	}
-            }
-			m_dbConnection.Close();
-		}
-		
-		// Delete all Rows.
-		static void DeleteAllDataRows(string TableName)
-		{
-			SQLiteConnection m_dbConnection;
-			
-			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
-			m_dbConnection.Open();
-			            
-            using (var command = new SQLiteCommand(m_dbConnection) )
-            {
-            	using (var transaction = m_dbConnection.BeginTransaction())
-            	{
-            	command.CommandText = "DELETE FROM " + TableName;
-				command.ExecuteNonQuery();
-				transaction.Commit();
-            	}
-            }
-            m_dbConnection.Close();
-            
-		}
-		
-		// SEND-Rows löschen.
-		static void DeleteSendDataRows()
-		{
-			SQLiteConnection m_dbConnection;
-			
-			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
-			m_dbConnection.Open();
-			            
-            using (var command = new SQLiteCommand(m_dbConnection) )
-            {
-            	using (var transaction = m_dbConnection.BeginTransaction())
-            	{
-            	command.CommandText = "DELETE FROM MELDE_PSS where PREFIX='SEND';";
-				command.ExecuteNonQuery();
-				transaction.Commit();
-            	}
-            }
-            m_dbConnection.Close();
-            
-		}
-		
-		
-		// Belegnummer und Anzahl schreiben.
-		static void FillTableBELEGNUMMER_UNIQUE()
-		{
-			SQLiteConnection m_dbConnection;
-			
-			m_dbConnection = new SQLiteConnection("Data Source=Bizerba.sqlite;Version=3;");
-			m_dbConnection.Open();
-			            
-            using (var command = new SQLiteCommand(m_dbConnection) )
-            {
-            	using (var transaction = m_dbConnection.BeginTransaction())
-            	{
-            	command.CommandText = "INSERT INTO BELEGNUMMER_UNIQUE (BELEGNUMMER, ANZAHL) " +
-            	"SELECT BELEGNUMMER, count(*) as ANZAHL FROM MELDE_PSS GROUP BY BELEGNUMMER HAVING COUNT(*);";
-				command.ExecuteNonQuery();
-				transaction.Commit();
-            	}
-            }
-            m_dbConnection.Close();   
-		} 
+		}		
 		
 		// Gewicht und Preis berechnen.
 		static void UpdateTableBELEGNUMMER_UNIQUE()
@@ -274,21 +158,7 @@ namespace Csv_Bizerba
 		Debug_Print_DT(ref dtData, "MELDE_PSS:");
   		
 	  }
-		
-		static void ReadBizerbaFile()
-		{
-		var dtData = new DataTable();
-		var oFH = new CSD.clsFileHandler(@"c:\pss\melde_1.txt");
-		
-		oFH.Delimiter= ";";
-		oFH.HeaderRow = -1;
-		dtData = oFH.CSVToTable();
-		
-		Debug_Print_DT(ref dtData, "MELDE_PSS:");
-  		FillTableMELDE_PSS(ref dtData);	
-  	
-	  }
-		
+			
 		[Conditional ("DEBUG")]
 		static void Debug_Print_DT(ref DataTable dtData, string comment)
 		{
@@ -310,6 +180,7 @@ namespace Csv_Bizerba
     	   	 }
     	   	Debug.WriteLine(""); 
 			}
+			Debug.WriteLine("");
 			
 		}
 		}			
