@@ -7,6 +7,7 @@
 using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics; // wegen Conditional
 
 namespace Csv_Bizerba
 {
@@ -284,6 +285,42 @@ namespace Csv_Bizerba
             } 
         	
         }
+        
+        public void UpdateHelpTable()
+        {
+        	var dt1 =  DoQuery("SELECT BELEGNUMMER, ANZAHL from BELEGNUMMER_UNIQUE");  
+        	// Print_DT(ref dt1, "BELEGNUMMER_UNIQUE:");
+        	
+        	 // Über alle Datensätze von BELEGNUMMER_UNIQUE iterieren.
+			foreach (DataRow row in dt1.Rows)
+			{
+				Debug.WriteLine(row[0]); // BELEGNUMMER
+			}
+        }
+        
+        [Conditional ("DEBUG")]
+        void Print_DT(ref DataTable dtData, string comment)
+		{
+			// Debug-Ausgabe
+			Debug.WriteLine(comment);
+			foreach (DataRow row in dtData.Rows)
+			{
+    	 	foreach (var item in row.ItemArray)
+    	   	{
+              	
+    	 		if (item.ToString() == "")
+           	 	{
+           	 	Debug.Write("- ");
+           	 	}
+           	 	else
+           	 	{
+           	 	Debug.Write(item+" ");	
+           	 	}
+    	   	 }
+    	   	Debug.WriteLine(""); 
+			}
+			
+		}
     
 	}
 }

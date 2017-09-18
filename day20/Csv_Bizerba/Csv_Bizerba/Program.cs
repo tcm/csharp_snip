@@ -47,6 +47,8 @@ namespace Csv_Bizerba
             	// genau ein Datensatz erzeugt.
             	database.FillHelpTable();
             	
+            	database.UpdateHelpTable();
+            	
             	
             	// DataTable dt1 = database.TestQuery();
             	// Debug_Print_DT(ref dt1, "blub");
@@ -310,14 +312,7 @@ namespace Csv_Bizerba
 			}
 			
 		}
-		
-		
-		
-			
-		}
-			
-			
-			
+		}			
 			
 	}
   
