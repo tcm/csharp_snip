@@ -294,6 +294,31 @@ namespace Csv_Bizerba
 				// Debug.WriteLine(row[0]); // BELEGNUMMER
 				var dt2 =  DoQuery("select BELEGNUMMER, SUM(GEWICHT) AS GEWICHT, SUM(PREIS) AS PREIS from MELDE_PSS where BELEGNUMMER = '" + row[0] + "'");  
 				Print_DT(ref dt2, "");
+				
+				// Daten in BELEGNUMMER_UNIQUE schreiben.
+				// Preis und Gewicht aktualisieren.
+				BeginTransaction();
+				try
+				{
+					SQLiteCommand cmd = CreateCommand();
+	        		string sql;
+	        		string gewicht;
+	        		string preis;
+	        		
+	        		gewicht = Convert.ToString(dt2.Rows[0][1]).Replace(",",".");
+					preis = Convert.ToString(dt2.Rows[0][2]).Replace(",",".");
+	        		       
+					sql = "UPDATE BELEGNUMMER_UNIQUE SET GEWICHT="+ gewicht +", PREIS=" + preis + " WHERE BELEGNUMMER = '" +row[0]+ "'";					
+	        		cmd.CommandText = sql;
+            		cmd.ExecuteNonQuery();
+					CommitTransaction();
+				}
+				catch (Exception ex)
+				{
+					RollbackTransaction();
+					throw ex;
+				}
+				
 			}
         }
         
