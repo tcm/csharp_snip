@@ -12,20 +12,32 @@ using System.Data.SQLite;
 using System.Diagnostics; // wegen Conditional
 
 
-
 namespace Csv_Bizerba
 {
 	class Program
 	{
+		static DateTime timer;
+		
+		
 		public static void Main(string[] args)
 		{
 			string dbname = "Test.sqlite";
 			
+			
 			// CreateSQLiteDatabase(dbname);
+			
+			
+			#if DEBUG 
+			   StartMeasureTime ("StartTime");
+			   Debug.WriteLine("Total Memory: {0}", GC.GetTotalMemory(false));
+			#endif
+			
+			
 			
 			DbSqlite database = new DbSqlite("Data Source=" + dbname +";Version=3;");
 			var dtData = new DataTable();
 			
+		
 			
             if (database.Connect() == false)
             {
@@ -50,6 +62,12 @@ namespace Csv_Bizerba
             	database.UpdateHelpTable();
             	
             	database.Disconnect();
+            	
+            	#if DEBUG 
+            	   EndMeasureTime ("EndTime");
+            	   Debug.WriteLine("Total Memory: {0}", GC.GetTotalMemory(false));
+				#endif 	
+            	
             }	
 			
 		}		
@@ -90,7 +108,24 @@ namespace Csv_Bizerba
 			Debug.WriteLine("");
 			
 		}
-		}			
+		
+		
+		static void StartMeasureTime(string text)
+		{
+			Debug.WriteLine(text);
+			timer = DateTime.Now;
+		}
+
+		static void EndMeasureTime(string text)
+		{
+			double seconds = DateTime.Now.Subtract (timer).TotalSeconds;
+			Debug.WriteLine ("{0}: {1}sec", text, seconds);
+			timer = DateTime.Now;	
+		}
+
+		}		
+
+	
 			
 	}
   

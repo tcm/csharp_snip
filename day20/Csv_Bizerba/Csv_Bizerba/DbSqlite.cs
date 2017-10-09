@@ -67,11 +67,17 @@ namespace Csv_Bizerba
         public bool Disconnect()
         {
            	 bool result = false;
-
-           	 this.connection.Close();
-           	 this.connection = null;
-
-          	 result = true;
+           	 
+           	 try
+           	 {
+           	 	this.connection.Close();
+           	 	this.connection = null;
+          	 	result = true;
+           	 }
+           	 catch(SQLiteException ex)
+			 {
+    			SQLiteErrorCode code = ex.ErrorCode;
+			 }
           	 
           	 return result;
 		}
