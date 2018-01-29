@@ -4,6 +4,8 @@ namespace HeroQuest
 {
 	class MainClass
 	{
+		static Random _random = new Random();
+
 		public static void Main (string[] args)
 		{
 			var MyHero = new Hero (HeroTyp.Gnom);
@@ -23,8 +25,8 @@ namespace HeroQuest
 			int sum = 0;
 			for (int i = 0; i < round; i++) {
 				
-				Random random = new Random ();
-				int randomNumber = random.Next (1, 7);
+				// Random random = new Random ();
+				int randomNumber = _random.Next (1, 7);
 				sum += randomNumber;
 			}
 			return sum;
