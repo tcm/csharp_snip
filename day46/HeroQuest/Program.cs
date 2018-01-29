@@ -11,8 +11,23 @@ namespace HeroQuest
 			MyHero.Defense = 2;
 			MyHero.Intelligence = 10;
 			MyHero.Hitpoint = 7;
+			MyHero.Speed = 2;
 
 			Console.WriteLine ("MyHero is: {0}", MyHero.getHeroTyp());
+
+			Console.WriteLine ("{0}",Dice6 (2));
+		}
+
+		public static int Dice6(int round)
+		{
+			int sum = 0;
+			for (int i = 0; i < round; i++) {
+				
+				Random random = new Random ();
+				int randomNumber = random.Next (1, 7);
+				sum += randomNumber;
+			}
+			return sum;
 		}
 	}
 }
