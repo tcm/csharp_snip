@@ -17,6 +17,9 @@ namespace HeroQuest
 
 			Console.WriteLine ("MyHero is: {0}", MyHero.getHeroTyp());
 
+			MyHero.printAttributes ();
+
+
 			Console.WriteLine ("{0}",Dice6 (2));
 			int[] array1 = DiceSpecial (4);
 
