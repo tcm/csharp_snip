@@ -8,25 +8,41 @@ namespace HeroQuest
 
 		public static void Main (string[] args)
 		{
-			var MyHero = new Hero (HeroTyp.Gnom);
-			MyHero.Attack = 2;
-			MyHero.Defense = 2;
-			MyHero.Intelligence = 10;
-			MyHero.Hitpoint = 7;
-			MyHero.Speed = 2;
+			// Charakter anlegen (Held).
+			var MyChar = new Hero (HeroTyp.Gnom);
+			MyChar.Name = "Borin";
+			MyChar.Attack = 2;
+			MyChar.Defense = 2;
+			MyChar.Intelligence = 10;
+			MyChar.Hitpoint = 7;
+			MyChar.Speed = 2;
 
-			Console.WriteLine ("MyHero is: {0}", MyHero.getHeroTyp());
+			// Charakter anlegen (Monster).
+			var MyChar2 = new Hero (HeroTyp.Monster);
+			MyChar.Name = "Orc";
+			MyChar2.Attack = 2;
+			MyChar2.Defense = 2;
+			MyChar2.Hitpoint = 1;
+			MyChar2.Speed = 2;
+			MyChar2.Intelligence = 10;
 
-			MyHero.printAttributes ();
+
+			// Welchen Typ hat unser Charakter?
+			Console.WriteLine ("MyChar is: {0}", MyChar.getHeroTyp());
+			MyChar.printAttributes ();
+			Console.WriteLine ("");
+			// Welchen Typ hat unser Charakter?
+			Console.WriteLine ("MyChar is: {0}", MyChar2.getHeroTyp());
+			MyChar2.printAttributes ();
 
 
-			Console.WriteLine ("{0}",Dice6 (2));
+			// Würfelwerte ausgeben
+			/* Console.WriteLine ("{0}",Dice6 (2)); // Normaler Würfel
 			int[] array1 = DiceSpecial (4);
-
-			foreach(var item in array1)
+			foreach(var item in array1) // Kampfwürfel
 			{
 				Console.Write(item.ToString()+" ");
-			}
+			} */
 		}
 
 		// Normaler Würfel
