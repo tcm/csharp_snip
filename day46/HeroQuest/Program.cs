@@ -9,8 +9,7 @@ namespace HeroQuest
 		public static void Main (string[] args)
 		{
 			// Charakter anlegen (Held).
-			var MyChar = new Hero (HeroTyp.Gnom);
-			MyChar.Name = "Borin";
+			var MyChar = new Hero (HeroTyp.Gnom, "Borin");
 			MyChar.Attack = 2;
 			MyChar.Defense = 2;
 			MyChar.Intelligence = 10;
@@ -18,8 +17,7 @@ namespace HeroQuest
 			MyChar.Speed = 2;
 
 			// Charakter anlegen (Monster).
-			var MyChar2 = new Hero (HeroTyp.Monster);
-			MyChar.Name = "Orc";
+			var MyChar2 = new Hero (HeroTyp.Monster, "Orc");
 			MyChar2.Attack = 2;
 			MyChar2.Defense = 2;
 			MyChar2.Hitpoint = 1;

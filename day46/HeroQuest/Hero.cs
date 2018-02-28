@@ -12,15 +12,18 @@ namespace HeroQuest
 	public class Hero
 	{
 		private HeroTyp typ;
+		private string name;
 		private int intelligenceValue;
 
 
-		public Hero (HeroTyp inTyp)
+
+		public Hero (HeroTyp inTyp, string inName)
 		{
 			typ = inTyp;
+			name = inName;
 		}
 
-		public string Name { get ; set; }
+
 		public string Description { get ; set; }
 		public int Hitpoint { get ; set; }
 		public int Attack { get ; set; }
@@ -55,7 +58,7 @@ namespace HeroQuest
 
 		public void printAttributes()
 		{
-			Console.WriteLine("Name: {0}",this.Name);
+			Console.WriteLine("Name: {0}",this.name);
 			Console.WriteLine("Description: {0}",this.Description);
 			Console.WriteLine("Intelligence: {0}",this.Intelligence);
 			Console.WriteLine("Hitpoint: {0}", this.Hitpoint);
