@@ -6,10 +6,7 @@ namespace HeroQuest
 	{
 		static Random _random = new Random();
 
-	/*	public Dice ()
-		{
-		} */
-
+	
 		// Normaler Würfel
 		public static int Dice6(int round)
 		{

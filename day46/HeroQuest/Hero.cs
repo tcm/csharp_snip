@@ -13,17 +13,15 @@ namespace HeroQuest
 	{
 		private HeroTyp typ;
 		private string name;
+
 		private int intelligenceValue;
-
-
 
 		public Hero (HeroTyp inTyp, string inName)
 		{
 			typ = inTyp;
 			name = inName;
 		}
-
-
+			
 		public string Description { get ; set; }
 		public int Hitpoint { get ; set; }
 		public int Attack { get ; set; }
