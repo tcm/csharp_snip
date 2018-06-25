@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 public enum HeroTyp { 
 	           Bararian,
 	           Elf,
@@ -9,7 +10,8 @@ public enum HeroTyp {
 
 namespace HeroQuest
 {
-	public class Hero
+	
+	public class Hero 
 	{
 		private HeroTyp typ;
 		private string name;
